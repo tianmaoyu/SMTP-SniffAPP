@@ -42,8 +42,10 @@
             this.textBox_thead_value = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox_mailFile = new System.Windows.Forms.ComboBox();
             this.label_inputUser_text = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label_grogress_value = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -61,11 +63,9 @@
             this.lable_memory_text = new System.Windows.Forms.Label();
             this.label_scanFail_text = new System.Windows.Forms.Label();
             this.label_scanSuccess_text = new System.Windows.Forms.Label();
+            this.label_scanCount_text = new System.Windows.Forms.Label();
             this.label_time_text = new System.Windows.Forms.Label();
             this.lable_thead_text = new System.Windows.Forms.Label();
-            this.label_scanCount_text = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -105,7 +105,6 @@
             this.button_stop.TabIndex = 0;
             this.button_stop.Text = "暂停";
             this.button_stop.UseVisualStyleBackColor = true;
-            this.button_stop.Click += new System.EventHandler(this.button_stop_Click);
             // 
             // button_start
             // 
@@ -154,7 +153,6 @@
             this.label_port_defalt.Size = new System.Drawing.Size(149, 12);
             this.label_port_defalt.TabIndex = 3;
             this.label_port_defalt.Text = "设置常用端口，以逗号隔开";
-            this.label_port_defalt.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -200,7 +198,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.comboBox_mailFile);
             this.groupBox2.Controls.Add(this.label_inputUser_text);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.label2);
@@ -217,13 +215,14 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "导入数据";
             // 
-            // comboBox1
+            // comboBox_mailFile
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(11, 36);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(265, 20);
-            this.comboBox1.TabIndex = 1;
+            this.comboBox_mailFile.FormattingEnabled = true;
+            this.comboBox_mailFile.Location = new System.Drawing.Point(11, 36);
+            this.comboBox_mailFile.Name = "comboBox_mailFile";
+            this.comboBox_mailFile.Size = new System.Drawing.Size(265, 20);
+            this.comboBox_mailFile.TabIndex = 1;
+            this.comboBox_mailFile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.comboBox_mailFile_MouseDown);
             // 
             // label_inputUser_text
             // 
@@ -233,6 +232,23 @@
             this.label_inputUser_text.Size = new System.Drawing.Size(77, 12);
             this.label_inputUser_text.TabIndex = 0;
             this.label_inputUser_text.Text = "选择邮件文件";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 215);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(263, 12);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "失败的保存到文件【自动加入启动时间前缀】txt";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(14, 239);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(262, 21);
+            this.textBox2.TabIndex = 1;
+            this.textBox2.Text = "2016-12-12：12-8-25@Fail-mail.txt";
             // 
             // groupBox1
             // 
@@ -405,6 +421,15 @@
             this.label_scanSuccess_text.TabIndex = 0;
             this.label_scanSuccess_text.Text = "扫描成功数：";
             // 
+            // label_scanCount_text
+            // 
+            this.label_scanCount_text.AutoSize = true;
+            this.label_scanCount_text.Location = new System.Drawing.Point(6, 76);
+            this.label_scanCount_text.Name = "label_scanCount_text";
+            this.label_scanCount_text.Size = new System.Drawing.Size(65, 12);
+            this.label_scanCount_text.TabIndex = 0;
+            this.label_scanCount_text.Text = "扫描总数：";
+            // 
             // label_time_text
             // 
             this.label_time_text.AutoSize = true;
@@ -422,32 +447,6 @@
             this.lable_thead_text.Size = new System.Drawing.Size(53, 12);
             this.lable_thead_text.TabIndex = 0;
             this.lable_thead_text.Text = "线程数：";
-            // 
-            // label_scanCount_text
-            // 
-            this.label_scanCount_text.AutoSize = true;
-            this.label_scanCount_text.Location = new System.Drawing.Point(6, 76);
-            this.label_scanCount_text.Name = "label_scanCount_text";
-            this.label_scanCount_text.Size = new System.Drawing.Size(65, 12);
-            this.label_scanCount_text.TabIndex = 0;
-            this.label_scanCount_text.Text = "扫描总数：";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 215);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(263, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "失败的保存到文件【自动加入启动时间前缀】txt";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(14, 239);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(262, 21);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "2016-12-12：12-8-25@Fail-mail.txt";
             // 
             // Form1
             // 
@@ -485,7 +484,7 @@
         private System.Windows.Forms.TextBox textBox_thead_value;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox_mailFile;
         private System.Windows.Forms.Label label_inputUser_text;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label_grogress_value;

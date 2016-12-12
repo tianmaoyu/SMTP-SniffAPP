@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMTP;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,24 +18,25 @@ namespace SMTP_PortScaner
             InitializeComponent();
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void comboBox_mailFile_MouseDown(object sender, MouseEventArgs e)
         {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button_stop_Click(object sender, EventArgs e)
-        {
-
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = false;
+            fileDialog.Title = "请选择文件";
+            fileDialog.Filter = "所有文件(*.txt)|*.txt";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string file in fileDialog.FileNames)
+                {
+                    comboBox_mailFile.Text += file.ToString();
+                }
+            }
         }
 
         private void button_start_Click(object sender, EventArgs e)
         {
-
+            FileProcess fileProcess = new FileProcess();
+            fileProcess.EmailGroup2(this.comboBox_mailFile.Text);
         }
     }
 }

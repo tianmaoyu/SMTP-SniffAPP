@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTP-SniffAPP", "SMTP-Sniff
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTP-PortScaner", "SMTP-PortScaner\SMTP-PortScaner.csproj", "{8958DBF9-5533-46F3-87A1-26FF1476EFE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTP", "SMTP\SMTP.csproj", "{A511A757-AC11-4C58-A064-40724069F27F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8958DBF9-5533-46F3-87A1-26FF1476EFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8958DBF9-5533-46F3-87A1-26FF1476EFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8958DBF9-5533-46F3-87A1-26FF1476EFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A511A757-AC11-4C58-A064-40724069F27F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A511A757-AC11-4C58-A064-40724069F27F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A511A757-AC11-4C58-A064-40724069F27F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A511A757-AC11-4C58-A064-40724069F27F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
