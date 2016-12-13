@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -56,6 +57,29 @@ namespace SMTP
             return "";
         }
 
+        //使用telent 链接的远程 的方式
+        public string IsPortOpened(string server,int port)
+        {
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.UseShellExecute = false;
+            info.RedirectStandardInput = true;
+            info.RedirectStandardOutput = true;
+            //info.FileName = "telnet";
+            info.CreateNoWindow = true;
+            info.Arguments = "telnet " + server+ " " + port;
+            Process ns = Process.Start(info);
+            StreamReader sout = ns.StandardOutput;
+            Regex reg = new Regex("220");
+            string strResponse = "";
+            while ((strResponse = sout.ReadLine()) != null)
+            {
+                Match amatch = reg.Match(strResponse);
+                if (reg.Match(strResponse).Success) return "成功:"+ port;
+            }
+            return "";
+        }
+
+
         /// <summary>
         /// 检查邮件是否可以用
         /// </summary>
@@ -83,7 +107,7 @@ namespace SMTP
             tcpc.SendTimeout = 2000;
             try
             {
-                tcpc.ConnectAsync(mailServer, port);
+                tcpc.Connect(mailServer, port);
                 NetworkStream ns = tcpc.GetStream();
                 StreamReader sr = new StreamReader(ns, Encoding.Default);
                 StreamWriter sw = new StreamWriter(ns, Encoding.Default);
@@ -123,22 +147,24 @@ namespace SMTP
         /// <param name="m_port"></param>
         /// <param name="m_host"></param>
         /// <returns></returns>
-        public bool CheckPortOpened(int m_port, string m_host)
+        public  bool CheckPortOpened(string m_host,int m_port)
         {
             string portStr = m_port.ToString();
             if (!string.IsNullOrEmpty(portStr))
             {
                 TcpClient tc = new TcpClient();
-                tc.SendTimeout = tc.ReceiveTimeout = 2000;
+                //tc.NoDelay = true;
+                //延迟2秒
+                tc.ReceiveTimeout = 3000;
                 try
                 {
-                    tc.ConnectAsync(m_host, m_port);
+                    tc.Connect(m_host, m_port);
                     if (tc.Connected)
                     {
                         return true;
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
                     return false;
                 }
@@ -152,7 +178,66 @@ namespace SMTP
         }
 
 
+        public bool CheckPortOpened2(string m_host, int m_port)
+        {
+            string portStr = m_port.ToString();
+            string str = "";
+            if (!string.IsNullOrEmpty(portStr))
+            {
+                TcpClient tc = new TcpClient(m_host, m_port);
+                NetworkStream ns= tc.GetStream();
+                StreamReader sr = new StreamReader(ns);
+                StreamWriter sw = new StreamWriter(ns);
+                //tc.NoDelay = true;
+                //延迟2秒
+                //tc.ReceiveTimeout = 3000;
+                try
+                {
+                    ///延迟2秒
+                    ns.ReadTimeout = 2000;
+                    while ((str = sr.ReadLine())!= null)
+                    {
+                        
+                        if (str.Contains("220"))
+                        {
+                            return true; ;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                finally
+                {
+                    tc.Close();
+                    tc = null;
+                }
+            }
+            return false;
+        }
+        //使用SMTP链接
+        public string SMTPConnet(string server,int port, string emailAddress,string password)
+        {
+            //配置服务器端口
+            SmtpClient client = new SmtpClient(server, port);
+            client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            //配置邮件名，密码
+            client.Credentials = new NetworkCredential(emailAddress, password);
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            try
+            {
+                client.Send("你好","","","");
+            }
+            catch(Exception ex)
+            {
+                return ex.ToString();
+            }
+            return "";
+        }
 
     }
     
 }
+
