@@ -35,8 +35,10 @@ namespace SMTP_PortScaner
 
         private void button_start_Click(object sender, EventArgs e)
         {
-            FileProcess fileProcess = new FileProcess();
-            fileProcess.EmailGroup2(this.comboBox_mailFile.Text);
+            //FileProcess fileProcess = new FileProcess();
+            //fileProcess.EmailGroup2(this.comboBox_mailFile.Text);
+
+         
         }
     }
 }

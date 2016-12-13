@@ -53,7 +53,7 @@ namespace SMTP
                 Match amatch = reg.Match(strResponse);
                 if (reg.Match(strResponse).Success) return amatch.Groups["mailServer"].Value;
             }
-            return null;
+            return "";
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace SMTP
         /// <param name="mailAddress"></param>
         /// <param name="errorInfo"></param>
         /// <returns></returns>
-        public int CheckEmail(string mailAddress, out string errorInfo)
+        public int CheckEmail(string mailAddress, int port, out string errorInfo)
         {
             Regex reg = new Regex("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$");
             if (!reg.IsMatch(mailAddress))
@@ -79,11 +79,11 @@ namespace SMTP
             }
             TcpClient tcpc = new TcpClient();
             tcpc.NoDelay = true;
-            tcpc.ReceiveTimeout = 3000;
-            tcpc.SendTimeout = 3000;
+            tcpc.ReceiveTimeout = 2000;
+            tcpc.SendTimeout = 2000;
             try
             {
-                tcpc.ConnectAsync(mailServer, 25);
+                tcpc.ConnectAsync(mailServer, port);
                 NetworkStream ns = tcpc.GetStream();
                 StreamReader sr = new StreamReader(ns, Encoding.Default);
                 StreamWriter sw = new StreamWriter(ns, Encoding.Default);
@@ -96,7 +96,8 @@ namespace SMTP
                 if (!strResponse.StartsWith("2"))
                 {
                     errorInfo = "UserName error!";
-                    return 403;
+                    //
+                    return 200;
                 }
                 sw.WriteLine("quit");
                 errorInfo = String.Empty;
