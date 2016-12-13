@@ -40,6 +40,13 @@ namespace ConsoleApplication1
                 if (_emailAndServr.Length > 1)
                 {
 
+                    //  Task.Factory.StartNew(
+                    //() =>
+                    //{
+                    //    CheckPortOpened2(_servr, commonPorts[0]);
+                    //});
+
+
                     Parallel.Invoke(
                         () =>
                         {
@@ -47,8 +54,13 @@ namespace ConsoleApplication1
                         },
                         () =>
                         {
-                            //CheckPortOpened(_servr, commonPorts[1]);
-                        });
+                            CheckPortOpened2(_servr, commonPorts[1]);
+                        },
+                        () =>
+                        {
+                            CheckPortOpened2(_servr, commonPorts[2]);
+                        }
+                        );
 
                     //循环验证 常用的端口
                     //var _25port = IsPortOpened(_servr, commonPorts[0]);
