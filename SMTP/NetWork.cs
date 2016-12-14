@@ -117,6 +117,7 @@ namespace SMTP
                 sw.WriteLine("mail from:<" + mailAddress + ">");
                 sw.WriteLine("rcpt to:<" + strTestFrom + ">");
                 strResponse = sr.ReadLine();
+
                 if (!strResponse.StartsWith("2"))
                 {
                     errorInfo = "UserName error!";
