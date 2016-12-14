@@ -5,12 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
+    public delegate void CallBackDelegate(string message);
+
     class Program
     {
+        private static Mutex mutex;
         static private Network network;
         static List<Tuple<string, string>> listEmail = new List<Tuple<string, string>>();
         //常用端口
@@ -19,6 +23,7 @@ namespace ConsoleApplication1
         static List<int> fixedPorts = new List<int> { 80, };
         static void Main(string[] args)
         {
+            mutex = new Mutex();
             //network = new Network();
             Console.WriteLine("开始运行");
             //List<string> emials = GetEmail();
@@ -30,6 +35,11 @@ namespace ConsoleApplication1
 
             //得到 邮件，和相应的邮件服务器
             List<string> emailAndServers = GetEmailAndServer();
+
+            //多线程执行 30个线程
+            ScanPortWithThread(50, emailAndServers);
+            Console.WriteLine("运行结束");
+            Console.ReadKey();
 
             foreach (string emailAndServr in emailAndServers)
             {
@@ -46,21 +56,21 @@ namespace ConsoleApplication1
                     //    CheckPortOpened2(_servr, commonPorts[0]);
                     //});
 
-
-                    Parallel.Invoke(
-                        () =>
-                        {
-                            CheckPortOpened2(_servr, commonPorts[0]);
-                        },
-                        () =>
-                        {
-                            CheckPortOpened2(_servr, commonPorts[1]);
-                        },
-                        () =>
-                        {
-                            CheckPortOpened2(_servr, commonPorts[2]);
-                        }
-                        );
+                //CUP 并行执行
+                    //Parallel.Invoke(
+                    //    () =>
+                    //    {
+                    //        CheckPortOpened2(_servr, commonPorts[0]);
+                    //    },
+                    //    () =>
+                    //    {
+                    //        CheckPortOpened2(_servr, commonPorts[1]);
+                    //    },
+                    //    () =>
+                    //    {
+                    //        CheckPortOpened2(_servr, commonPorts[2]);
+                    //    }
+                    //    );
 
                     //循环验证 常用的端口
                     //var _25port = IsPortOpened(_servr, commonPorts[0]);
@@ -106,7 +116,154 @@ namespace ConsoleApplication1
             //    }
             //    Console.ReadKey();
             //}
+            Console.ReadKey();
+        }
+        //开启多线程扫描
 
+         public static void ScanPortWithThread(int count,List<string> emailAndServers)
+        {
+            //最大192个
+            var waitsList = new List<List<EventWaitHandle>>();
+            var waits = new List<EventWaitHandle>();
+            var waits2 = new List<EventWaitHandle>();
+            var waits3 = new List<EventWaitHandle>();
+            //重邮件文件中取得 count 个邮件放入 运行
+            List<string> _emailAndServers = emailAndServers;
+
+            //启动的线程为 count * 3 
+            for(int i = 0; i < count; i++)
+            {
+                if (_emailAndServers.Count < 1) break;//邮件已经使用完，返回
+
+                string[] _emailAndServr = _emailAndServers[0].Split('&');
+                if (_emailAndServr.Length <= 1) {
+                    _emailAndServers.Remove(_emailAndServers[0]);//删掉错的
+                    continue;
+                }
+                string _emial = _emailAndServr[0];
+                string emailServer = _emailAndServr[1];
+
+                //循环监测 端口
+                foreach(int _port in commonPorts)
+                {
+                    CallBackDelegate callBack = CallBack;
+                    var handler = new ManualResetEvent(false);
+                    if (waits.Count < 64)
+                    {
+                        waits.Add(handler);
+                    }
+                    if (waits2.Count < 64)
+                    {
+                        waits2.Add(handler);
+                    }
+                    if (waits3.Count < 64)
+                    {
+                        waits3.Add(handler);
+                    }
+
+
+                    new Thread(new ParameterizedThreadStart(CheckPortOpenedForThread))
+                    {
+                        //线程的名字
+                        Name = "线程" + i.ToString()
+
+                    }.Start(new Tuple<string, int,EventWaitHandle, CallBackDelegate>(emailServer, _port, handler, callBack));
+                }
+
+                //把已经运行的删掉
+               _emailAndServers.Remove(_emailAndServers[0]);
+              
+            }
+            //等待30个线程都结束后继续执行
+            if (waits.Count < 1)
+            {
+                return;
+            }
+            WaitHandle.WaitAll(waits.ToArray());
+            if (waits2.Count > 1)
+            {
+                WaitHandle.WaitAll(waits2.ToArray());
+            }
+            if (waits3.Count > 1)
+            {
+                WaitHandle.WaitAll(waits3.ToArray());
+            }
+            ScanPortWithThread( count, _emailAndServers);
+        }
+      
+
+
+        //多线程执行的函数
+        //自定定义的链接
+        static public void CheckPortOpenedForThread(object param)
+        {
+            var _param= (Tuple<string, int, EventWaitHandle, CallBackDelegate >)param;
+            var _host = _param.Item1;
+            var _port = _param.Item2;
+            var _eventWaitHanld = _param.Item3;
+            CallBackDelegate _callBack = _param.Item4 as CallBackDelegate;
+
+            try
+            {
+                TcpClient connection = new TcpClientWithTimeout(_host, _port, 2000).Connect();
+                try
+                {
+                    ///延迟2秒
+                    //stream.ReadTimeout = 3000;
+                    if (connection.Connected)
+                    {
+                        Console.WriteLine(string.Format("{0}--端口：{1}---成功---执行的线程为{2}", _host, _port,Thread.CurrentThread.Name));
+                        SaveServerAndPortSuccess(_host, _port.ToString());
+                        connection.Close();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(string.Format("{0}--端口：{1}---未知错误---执行的线程为{2}", _host, _port, Thread.CurrentThread.Name));
+                    SaveServerAndPortFail(_host, _port.ToString());
+                    connection.Close();
+                    connection = null;
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Format("{0}--端口：{1}---链接超时---执行的线程为{2}", _host, _port, Thread.CurrentThread.Name));
+                SaveServerAndPortFail(_host, _port.ToString());
+            }
+            finally
+            {
+                //信号
+                _eventWaitHanld.Set();
+            }
+          
+        }
+        //线程后调函数
+         static public void CallBack(string str)
+        {
+
+        }
+
+        //报存扫描到打开的端口
+        private static void SaveServerAndPortSuccess(string server,string port)
+        {
+            mutex.WaitOne(); //当一个线程正在使用该方法的时候，锁定该方法，使其他线程处于等待状态
+            using (StreamWriter sw = new StreamWriter("server-port-success.txt", true, Encoding.Default))
+            {
+                sw.WriteLine(string.Format("{0}&{1}", server, port));
+            }
+            mutex.ReleaseMutex(); //使用完了，释放锁，让其他线程继续使用
+        }
+        //报存扫描到打开的端口
+        private static void SaveServerAndPortFail(string server, string port)
+        {
+            mutex.WaitOne(); //当一个线程正在使用该方法的时候，锁定该方法，使其他线程处于等待状态
+            using (StreamWriter sw = new StreamWriter("server-port-fail.txt", true, Encoding.Default))
+            {
+                sw.WriteLine(string.Format("{0}&{1}", server, port));
+            }
+            mutex.ReleaseMutex(); //使用完了，释放锁，让其他线程继续使用
         }
 
         //自定定义的链接
@@ -115,20 +272,14 @@ namespace ConsoleApplication1
             try
             {
                 TcpClient connection = new TcpClientWithTimeout(m_host, m_port, 2000).Connect();
-                //NetworkStream stream = connection.GetStream();
-                //StreamReader sr = new StreamReader(stream);
-                //StreamWriter sw = new StreamWriter(stream);
-                //string str = "";
-                //tc.NoDelay = true;
-                //延迟2秒
-                //tc.ReceiveTimeout = 3000;
                 try
                 {
                     ///延迟2秒
                     //stream.ReadTimeout = 3000;
                     if (connection.Connected)
                     {
-                        Console.WriteLine("good");
+                        Console.WriteLine(string.Format("{0}--端口：{1}---成功",m_host, m_port));
+                        SaveServerAndPortSuccess(m_host, m_port.ToString());
                         connection.Close();
                         return true;
 
@@ -136,16 +287,17 @@ namespace ConsoleApplication1
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(string.Format("{0}--端口：{1}---未知错误", m_host, m_port));
+                    SaveServerAndPortFail(m_host, m_port.ToString());
                     connection.Close();
-                    //sr.Close();
-                    //sw.Close();
                     connection = null;
                 }
                 return false;
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(string.Format("{0}--端口：{1}---链接超时", m_host, m_port));
+                SaveServerAndPortFail(m_host, m_port.ToString());
             }
             return false;
         }

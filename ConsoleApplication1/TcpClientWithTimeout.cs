@@ -34,7 +34,7 @@ namespace ConsoleApplication1
             // 不会占用机器太长的时间
             thread.Start();
 
-            // 等待如下的时间
+            // 次线程在此等待一段时间
             thread.Join(_timeout_milliseconds);
             if (connected == true)
             {
