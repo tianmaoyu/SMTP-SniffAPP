@@ -69,6 +69,7 @@ namespace SMTP
             info.Arguments = "telnet " + server+ " " + port;
             Process ns = Process.Start(info);
             StreamReader sout = ns.StandardOutput;
+            StreamWriter SRinput= ns.StandardInput;
             Regex reg = new Regex("220");
             string strResponse = "";
             while ((strResponse = sout.ReadLine()) != null)

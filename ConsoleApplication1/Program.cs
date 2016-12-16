@@ -26,12 +26,12 @@ namespace ConsoleApplication1
             mutex = new Mutex();
             //network = new Network();
             Console.WriteLine("开始运行");
-            //List<string> emials = GetEmail();
-            //foreach (string email in emials)
-            //{
-            //    GetEamilAddress(email);
-            //}
-            //Console.ReadKey();
+            List<string> emials = GetEmail();
+            foreach (string email in emials)
+            {
+                GetEamilAddress(email);
+            }
+            Console.ReadKey();
 
             //得到 邮件，和相应的邮件服务器
             List<string> emailAndServers = GetEmailAndServer();
@@ -152,11 +152,13 @@ namespace ConsoleApplication1
                     {
                         waits.Add(handler);
                     }
-                    if (waits2.Count < 64)
+                    var falge2 = waits.Count == 64 && waits2.Count < 64;
+                    if (falge2)
                     {
                         waits2.Add(handler);
                     }
-                    if (waits3.Count < 64)
+                    var flage3 = waits2.Count == 64 && waits3.Count < 64;
+                    if (flage3)
                     {
                         waits3.Add(handler);
                     }

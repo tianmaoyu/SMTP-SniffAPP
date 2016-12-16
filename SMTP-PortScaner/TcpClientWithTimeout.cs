@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace SMTP_PortScaner
 {
     public class TcpClientWithTimeout
     {

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadApp", "ThreadApp\Thre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "validateSMTP", "validateSMTP\validateSMTP.csproj", "{9ADC4E7C-CCED-4999-8093-E64AD9E6DB3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "userCMD", "userCMD\userCMD.csproj", "{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{9ADC4E7C-CCED-4999-8093-E64AD9E6DB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ADC4E7C-CCED-4999-8093-E64AD9E6DB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ADC4E7C-CCED-4999-8093-E64AD9E6DB3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

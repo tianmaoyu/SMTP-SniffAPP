@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
+using System.Threading;
+using ConsoleApplication1;
 
 namespace testTelnet
 {
@@ -19,48 +21,69 @@ namespace testTelnet
         SGA = 3
     }
 
-    
 
-
-    class TelnetConnection
+   public class SMTPConnection
     {
         TcpClient tcpSocket;
-
-        int TimeOutMs = 1 * 1000;
-
-        public TelnetConnection(String Hostname, int Port)
+        int TimeOutMs = 200;
+        public SMTPConnection(String Hostname, int Port)
         {
-            tcpSocket = new TcpClient(Hostname, Port);
-
+            /*TcpClient*/ tcpSocket = new TcpClientWithTimeout(Hostname, Port, 2000).Connect();
+            //tcpSocket = new TcpClient(Hostname, Port);
         }
 
-        public string Login(string Username, string Password, int LoginTimeOutMs)
+        public bool Login(string userName, string password, int LoginTimeOutMs)
         {
-            int oldTimeOutMs = TimeOutMs;
-            TimeOutMs = LoginTimeOutMs;
-            string s = Read();
-            if (!s.TrimEnd().EndsWith(":"))
-                throw new Exception("Failed to connect : no login prompt");
-            WriteLine(Username);
-
-            s += Read();
-            if (!s.TrimEnd().EndsWith(":"))
-                throw new Exception("Failed to connect : no password prompt");
-            WriteLine(Password);
-
-            s += Read();
-            TimeOutMs = oldTimeOutMs;
-
-            return s;
+            try {
+                if (!tcpSocket.Connected)
+                {
+                    return false;
+                }
+                TimeOutMs = LoginTimeOutMs;
+                //链接后第一次等待读取2秒
+                string str = ReadFirst(2000);
+                if (string.IsNullOrEmpty(str))
+                {
+                    //无法链接
+                    DisConnect();
+                    return false;
+                }
+                WriteLine("EHLO dsfsdfsd");
+                WriteLine("AUTH LOGIN");
+                WriteLine(ToBase64(userName));
+                WriteLine(ToBase64(password));
+                str += ReadFirst(1000);
+                if (str.ToLower().Contains("successful"))
+                {
+                    WriteLine("quit");
+                    DisConnect();
+                    return true;
+                    //判断是否登录成功
+                }
+                //未知错误的
+                WriteLine("quit");
+                DisConnect();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
+          
         }
 
-        public void DisConnect()
+        private void DisConnect()
         {
             if (tcpSocket != null)
             {
                 if (tcpSocket.Connected)
                 {
                     tcpSocket.Client.Disconnect(true);
+                }
+                else
+                {
+                    tcpSocket.Close();
                 }
             }
         }
@@ -77,7 +100,34 @@ namespace testTelnet
             byte[] buf = System.Text.ASCIIEncoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
             tcpSocket.GetStream().Write(buf, 0, buf.Length);
         }
+        //字符转换 str 变成base64
+        public string ToBase64(string str)
+        {
+            byte[] b = System.Text.Encoding.Default.GetBytes(str);
+            var strBase64 = Convert.ToBase64String(b);
+            return strBase64;
+        }
 
+        public void WriteBase64(string str)
+        {
+            byte[] b = System.Text.Encoding.Default.GetBytes(str);
+            var strBase64 = Convert.ToBase64String(b);
+            if (!tcpSocket.Connected) return;
+            byte[] buf = System.Text.ASCIIEncoding.ASCII.GetBytes(strBase64.Replace("\0xFF", "\0xFF\0xFF"));
+            tcpSocket.GetStream().Write(buf, 0, buf.Length);
+        }
+        public string ReadFirst(int waitTime)
+        {
+            if (!tcpSocket.Connected) return null;
+            StringBuilder sb = new StringBuilder();
+            do
+            {
+                ParseTelnet(sb);
+                System.Threading.Thread.Sleep(waitTime);
+            } while (tcpSocket.Available > 0);
+
+            return ConvertToGB2312(sb.ToString());
+        }
         public string Read()
         {
             if (!tcpSocket.Connected) return null;
@@ -154,40 +204,71 @@ namespace testTelnet
             return str_converted;
         }
 
-        public void Start()
+     
+    }
+
+    //自定义超时检测
+    public class SMTPConnectionWithTimeout
+    {
+        protected string _hostname;
+        protected int _port;
+        protected int _timeout_milliseconds;
+        protected SMTPConnection smtpConnection;
+        protected bool connected;
+        protected Exception exception;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hostname">主机</param>
+        /// <param name="port">端口</param>
+        /// <param name="timeout_milliseconds">超时</param>
+        public SMTPConnectionWithTimeout(string hostname, int port, int timeout_milliseconds)
         {
-            //create a new telnet connection to hostname "gobelijn" on port "23" 
-            TelnetConnection tc = new TelnetConnection("127.0.0.1", 23);
+            _hostname = hostname;
+            _port = port;
+            _timeout_milliseconds = timeout_milliseconds;
+        }
 
-            //login with user "root",password "rootpassword", using a timeout of 100ms,  
-            //and show server output 
-            string s = tc.Login("administrator", "pw", 100);
-            Console.Write(s);
-
-            // server output should end with "{1}quot; or ">", otherwise the connection failed 
-            string prompt = s.TrimEnd();
-            prompt = s.Substring(prompt.Length - 1, 1);
-            if (prompt != ":")
-                throw new Exception("Connection failed");
-
-            prompt = "";
-
-            // while connected 
-            while (tc.IsConnected && prompt.Trim() != "exit")
+        public SMTPConnection smtpConnectionRun()
+        {
+            connected = false;
+            exception = null;
+            Thread thread = new Thread(new ThreadStart(BeginConnect));
+            thread.IsBackground = true;
+            thread.Start();
+            thread.Join(_timeout_milliseconds);
+            if (connected)
             {
-                // display server output 
-                Console.Write(tc.Read());
-
-                // send client input to server 
-                prompt = Console.ReadLine();
-                tc.WriteLine(prompt);
-
-                // display server output 
-                Console.Write(tc.Read());
+                thread.Abort();
+                return smtpConnection;
+            }
+            if (exception != null)
+            {
+                thread.Abort();
+                throw exception;
+            }
+            else
+            {
+                thread.Abort();
+                string message = string.Format("链接超时");
+                throw new TimeoutException(message);
             }
 
-            Console.WriteLine("***DISCONNECTED");
-            Console.ReadLine();
+            return new SMTPConnection(_hostname, _port);
+        }
+        protected void BeginConnect()
+        {
+            try
+            {
+                smtpConnection = new SMTPConnection(_hostname, _port);
+                // 标记成功，返回调用者
+                connected = true;
+            }
+            catch (Exception ex)
+            {
+                // 标记失败
+                exception = ex;
+            }
         }
     }
 }

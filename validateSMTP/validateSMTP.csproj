@@ -45,9 +45,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocketTelnet.cs" />
+    <Compile Include="ClassTelnet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleApplication1\ConsoleApplication1.csproj">
+      <Project>{952f5213-65bc-4f60-a8a6-66ccace66f55}</Project>
+      <Name>ConsoleApplication1</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
