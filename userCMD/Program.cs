@@ -45,14 +45,14 @@ namespace userCMD
         public static int HostTotal = 0;
         static CofingInfo info;
 
-
-
+    
+        
         static void Main(string[] args)
         {
             network = new Network();
             mutex = new Mutex();
-
-            info = ReadConfig();
+           
+             info = ReadConfig();
             if (info == null)
             {
                 //直接退出
@@ -254,6 +254,7 @@ namespace userCMD
                 fileStream.Close();
             }
             return filePath;
+        
         }
 
         //用多线程的方式得到服务器地址
@@ -516,6 +517,58 @@ namespace userCMD
 
         }
 
+        /// <summary>
+        /// mx 方式的host
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        async  Task<Tuple<string,string>> GetHostWithMX(string email)
+        {
+            return await Task.Run(() =>
+            {
+                string host = network.GetMailServer(email);
+                EmailAndHostAll.Add(host, email);
+                var domain = email.Split('@')?[1];
+                if (!string.IsNullOrEmpty(host))
+                {
+                    EmailAndHostSuccess.Add(host, email);
+                    //成功的-保存到文件去
+                    SaveHostSuccess(domain, host);
+                }
+                else
+                {
+                    //失败的
+                    EmailAndHostFail.Add(host, email);
+                    SaveHostFail(domain);
+                }
+                return new Tuple<string, string>(email, host);
+            });
+        }
+        async Task<Tuple<string, string>> GetHostWithHTTP(string email,string str)
+        {
+            return await Task.Run( async() =>
+            {
+                var domain = email.Split('@')?[1];
+                if (domain == null)
+                {
+                    return new Tuple<string, string>(email, null);
+                }
+                string host = str + "." + email;
+                 bool result = await network.HttpBrowse(host);
+                if (result)
+                {
+                    SaveHostSuccess(domain, host);
+                    return new Tuple<string, string>(email, host);
+                }
+                else
+                {
+                    SaveHostFail(domain);
+                    return new Tuple<string, string>(email, null);
+                }
+            });
+        }
+
+
     }
     public class CofingInfo
     {
@@ -530,4 +583,7 @@ namespace userCMD
         public string IsNoCheckHost { set; get; }
 
     }
+ 
+   
+
 }

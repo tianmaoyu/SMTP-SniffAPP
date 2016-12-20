@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace userCMD
 {
-    class Scaner
+    public static class  Scaner
     {
+
     }
 }

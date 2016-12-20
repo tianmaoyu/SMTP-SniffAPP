@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "validateSMTP", "validateSMT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "userCMD", "userCMD\userCMD.csproj", "{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thead_anysc", "Thead_anysc\Thead_anysc.csproj", "{23C9D0DC-5EF4-4479-B6F0-B4D9405B666B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D4D1E03-E21B-4377-8287-5BD6F99CE80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C9D0DC-5EF4-4479-B6F0-B4D9405B666B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C9D0DC-5EF4-4479-B6F0-B4D9405B666B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C9D0DC-5EF4-4479-B6F0-B4D9405B666B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C9D0DC-5EF4-4479-B6F0-B4D9405B666B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

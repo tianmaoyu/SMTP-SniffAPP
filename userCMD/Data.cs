@@ -25,16 +25,16 @@ namespace userCMD
         public List<string> Emails { set; get; }
         //进度
         public int Count { set; get; }
-        public Data()
-        {
-            if (!File.Exists("配置文件.txt"))
-            {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("当前没有配置文件，请先配置");
-                Console.ReadKey();
-            }
-           Emails = File.ReadAllLines("配置文件.txt", Encoding.Default).ToList();
-            //DomainHost.GetOrAdd("ddd", "ddd");
-        }
+        //public Data()
+        //{
+        //    if (!File.Exists("配置文件.txt"))
+        //    {
+        //        Console.BackgroundColor = ConsoleColor.Red;
+        //        Console.WriteLine("当前没有配置文件，请先配置");
+        //        Console.ReadKey();
+        //    }
+        //   Emails = File.ReadAllLines("配置文件.txt", Encoding.Default).ToList();
+        //    //DomainHost.GetOrAdd("ddd", "ddd");
+        //}
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text;
@@ -56,6 +57,24 @@ namespace userCMD
             }
             return "";
         }
+
+        async  public Task<bool> HttpBrowse(string url)
+        {
+            Uri uri = new Uri(url);    
+            HttpClient client = new HttpClient();
+            string result= await client.GetStringAsync(url);
+            if (result.Contains(""))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+           
+        }
+
+
 
         //使用telent 链接的远程 的方式
         public string IsPortOpened(string server,int port)
