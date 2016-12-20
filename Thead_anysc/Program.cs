@@ -34,14 +34,16 @@ namespace Thead_anysc
         public static async Task RunThread()
         {
             List<string> lsit = new List<string> { "a", "b", "d", "d", "e", "f", "g", "a", "b", "d", "d", "e", "f", "g" };
-             await Task.Run( async() => {
+             await Task.Run( async () => {
                  while (true)
                  {
-                     if (lsit.Count == 1)
+                     if (lsit.Count > 1)
                      {
                          await Task.Delay(1000);
-                         Console.WriteLine("删完了");
-                         //ScanPortWithThread(2, lsit);
+                         Console.WriteLine("删除完成");
+                         Console.WriteLine("开始执行");
+                         await ScanPortWithThread(2, lsit);
+                         Console.WriteLine("结束执行");
                      }
                      else
                      {
@@ -126,7 +128,7 @@ namespace Thead_anysc
            return string.Format("Task{0} is running on a thread id{1}", Thread.CurrentThread.ManagedThreadId);
         }
 
-        public static void ScanPortWithThread(int count, List<string> emailAndServers)
+        public static async Task ScanPortWithThread(int count, List<string> emailAndServers)
         {
             if (emailAndServers.Count <= 0) return;
             var  email = emailAndServers[0];
@@ -146,7 +148,7 @@ namespace Thead_anysc
           
             WaitHandle.WaitAll(waits.ToArray());
             Console.WriteLine("多线程循环了一遍");
-            ScanPortWithThread(count, emailAndServers);
+           await ScanPortWithThread(count, emailAndServers);
         }
         public static void CheckPortOpenedForThread(object obj)
         {
