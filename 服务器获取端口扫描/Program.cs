@@ -10,8 +10,8 @@ namespace 服务器获取端口扫描
 {
     class Program
     {
-        static ConcurrentQueue<Tuple<string, string>> SeachTasksWithHttp = new ConcurrentQueue<Tuple<string, string>>();
         #region 公共数据------------------------------------
+        static ConcurrentQueue<Tuple<string, string>> SeachTasksWithHttp = new ConcurrentQueue<Tuple<string, string>>();
         static ConcurrentQueue<string> SeachTasksSecondWithMX = new ConcurrentQueue<string>();
         static ConcurrentQueue<Tuple<string, string>> ScanTasks = new ConcurrentQueue<Tuple<string, string>>();
         static  ConcurrentDictionary<string, string> DomainHost = new ConcurrentDictionary<string, string>();
