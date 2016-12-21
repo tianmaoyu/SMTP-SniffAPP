@@ -45,7 +45,9 @@
     <Compile Include="DataSave.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seacher.cs" />
     <Compile Include="TcpClientWithTimeout.cs" />
+    <Compile Include="UserConfigInfo.cs" />
     <Compile Include="WaitHandlePlus.cs" />
     <Compile Include="WebRequestWithTimeout.cs" />
   </ItemGroup>

@@ -10,48 +10,122 @@ namespace 服务器获取端口扫描
 {
     class Program
     {
+        static ConcurrentQueue<Tuple<string, string>> SeachTasksWithHttp = new ConcurrentQueue<Tuple<string, string>>();
         #region 公共数据------------------------------------
-        ConcurrentQueue<Tuple<string, string>> SreachTasks = new ConcurrentQueue<Tuple<string, string>>();
-        ConcurrentQueue<Tuple<string, string>> ScanerTasks = new ConcurrentQueue<Tuple<string, string>>();
-        ConcurrentDictionary<string, string> DomainHost = new ConcurrentDictionary<string, string>();
-        ConcurrentDictionary<string, Tuple<string, string>> DomainHostPort = new ConcurrentDictionary<string, Tuple<string, string>>();
+        static ConcurrentQueue<string> SeachTasksSecondWithMX = new ConcurrentQueue<string>();
+        static ConcurrentQueue<Tuple<string, string>> ScanTasks = new ConcurrentQueue<Tuple<string, string>>();
+        static  ConcurrentDictionary<string, string> DomainHost = new ConcurrentDictionary<string, string>();
+        static ConcurrentDictionary<string, Tuple<string, string>> DomainHostPort = new ConcurrentDictionary<string, Tuple<string, string>>();
         List<string> Email = new List<string>();
+        static ConcurrentBag<int> Ports = new ConcurrentBag<int> { 25, 587, 465 };
+        static DataSave dataSave = new DataSave();
         #endregion
+        static UserConfigInfo userInfo = new UserConfigInfo();
+     
 
         static void Main(string[] args)
         {
-            TimerCallback timerCallback = new TimerCallback(PrintInfo);
+           TimerCallback timerCallback = new TimerCallback(PrintInfo);
             Timer timer = new Timer(timerCallback, null, 200, 2000);
-            
+            int threadCount = userInfo.ThreadCount;
+            RunSreachWithMXTask(userInfo);
+            RunSreachWithMxTaskSecond(threadCount);
+            Console.ReadKey();
         }
 
         //打印程序
         public static void PrintInfo(object obj)
         {
-
+            //邮件总是
+            //查找到第几行（邮件个数）
+            //已经查询的次数
+            //查询陈功数量
+            //端口扫描次数
+            //端口成功的个数
+            Console.WriteLine("MX成功数量为：{0}", ScanTasks.Count);
+            Console.WriteLine("MX失败数量为：{0}", SeachTasksSecondWithMX.Count);
+            Console.WriteLine("HTTP查询等待数量：{0}", SeachTasksWithHttp.Count);
         }
 
         #region 异步执行的任务-----------------------------------
         //异步运行查询:MX任务
-        public static async Task RunSreachWithMXTask()
+        public static async Task RunSreachWithMXTask(UserConfigInfo userConfigInfo)
         {
+            List<string> emails = userConfigInfo.Emails;
+            int threadCount = userConfigInfo.ThreadCount;
             await Task.Run(async () =>
             {
-                //是否暂停，退出
                 while (true)
                 {
-                    //队列中是否有任务
-                    if (true)
+                    List<string> _emails;
+                    int count = 0;
+                    if (emails.Count < 1) break;//运行完成
+                    if (emails.Count < 300)
                     {
-
+                        count = emails.Count;
+                        _emails = emails.Where((item, index) => index < emails.Count).ToList();
                     }
                     else
                     {
-                        //等到一段时间
-                        await Task.Delay(1000);
+                        count = 300;
+                        _emails = emails.Where((item, index) => index < 300).ToList();
+                    }
+                    //是否暂停
+                    if (true)
+                    {
+                        //
+                        await SeachMangerWithMX(threadCount, _emails);
+                        emails.RemoveRange(0, count);
+                    }
+                    else
+                    {
+                      await  Task.Delay(1000);
                     }
                 }
+            });
+        }
 
+        public static async Task RunSreachWithMxTaskSecond(int threadCount)
+        {
+           
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    #region 要进行第二查询得到 emails
+                    Console.WriteLine("第二次开始运行");
+                    List<string> emails = new List<string>();
+                    for (int i = 0; i <= 300; i++)
+                    {
+                        if (SeachTasksSecondWithMX.Count > 1)
+                        {
+                            string str = null;
+                            var _str = SeachTasksSecondWithMX.TryDequeue(out str);
+                            if (str != null)
+                            {
+                                emails.Add(str);
+                            }
+                            //emails.Add("123@qq.com");
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    #endregion
+                    //是否暂停
+                    if (true && emails.Count>0)
+                    {
+                        //开始执行一直到完成为
+                        await SeachMangerWithMXSecond(threadCount, emails);
+                    }
+                    else
+                    { 
+                        
+                       await Task.Delay(2000);
+                    }
+                }
             });
         }
         //异步运行查询:HTTP任务
@@ -62,6 +136,28 @@ namespace 服务器获取端口扫描
                //是否暂停，退出
                 while (true)
                 {
+                    #region 要进行第二查询得到 emails
+                    Console.WriteLine("HTTP开始运行");
+                    List<string> emails = new List<string>();
+                    for (int i = 0; i <= 300; i++)
+                    {
+                        if (SeachTasksSecondWithMX.Count > 1)
+                        {
+                            string str = null;
+                            var _str = SeachTasksSecondWithMX.TryDequeue(out str);
+                            if (_str != null)
+                            {
+                                emails.Add(str);
+                            }
+                            //emails.Add("123@qq.com");
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    #endregion
                     //队列中是否有任务
                     if (true)
                     {
@@ -98,9 +194,9 @@ namespace 服务器获取端口扫描
         }
         #endregion 任务结束
 
-        #region 多选线程端口扫描 MX方式-----------------------------
-        /// 多线程执行端口扫描管理器 MX
-        public static async Task ScanPortMangerWithMX(int count,List<string> emails)
+        #region 多选线程端服务器查询MX方式-----------------------------
+        /// 多线程执行服务器查询 MX
+        public static async Task SeachMangerWithMX(int count,List<string> emails)
         {
             if (emails.Count < 1) return;
             var waits = new List<EventWaitHandle>();
@@ -110,34 +206,43 @@ namespace 服务器获取端口扫描
                 if (emails.Count < 1) break;
                 var email = emails[0];
                 emails.Remove(email);
-                emails.Remove(email);
                 //检查邮件是否查询过
-                if (false)
+                var isChecked= IsCheckDomainHost(email);
+                if (isChecked)
                 {
-                    //
                     continue;
                 }
                 var handler = new ManualResetEvent(false);
                 waits.Add(handler);
-                new Thread(new ParameterizedThreadStart(ScanPortWithMX))
-                    .Start(new Tuple<string, int, EventWaitHandle>(email, 666, handler));
+                new Thread(new ParameterizedThreadStart(SeachWithMX))
+                    .Start(new Tuple<string, EventWaitHandle>(email, handler));
             }
             if (waits.Count > 0)
             {
                 WaitHandlePlus.WaitALL(waits);
             }
-            await ScanPortMangerWithMX(count, emails);
+            await SeachMangerWithMX(count, emails);
         }
-        /// 端口扫描 MX
-        public static void ScanPortWithMX(object obj)
+        /// 服务器查询 MX
+        public static void SeachWithMX(object obj)
         {
-            var param = (Tuple<string, int, EventWaitHandle>)obj;
-            var host = param.Item1;
-            var port = param.Item2;
-            var eventWaitHanld = param.Item3;
+            var param = (Tuple<string, EventWaitHandle>)obj;
+            var email = param.Item1;
+            var eventWaitHanld = param.Item2;
             try
             {
-
+                var host = Seacher.GetHostWithMX(email);
+                var domain = email.Split('@')[1];
+                if (host != null)
+                {
+                    DataSave.SaveHostSuccess(domain, host);
+                    //加入扫描任务
+                    ScanTasks.Enqueue(new Tuple<string, string>(domain, host));
+                }
+                else
+                {
+                    SeachTasksSecondWithMX.Enqueue(domain);
+                }
             }
             catch(Exception ex)
             {
@@ -150,9 +255,9 @@ namespace 服务器获取端口扫描
         }
         #endregion
 
-        #region 多线程执行端口扫描 HTTP方式------------------------
-        /// 多线程执行端口扫描管理器 HTTP
-        public static async Task ScanPortMangerWithHttp(int count, List<string> emails)
+        #region 多线程查询服务器第二次 MX方式
+        /// 多线程执行服务器查询 MX
+        public static async Task SeachMangerWithMXSecond(int count, List<string> emails)
         {
             if (emails.Count < 1) return;
             var waits = new List<EventWaitHandle>();
@@ -162,34 +267,44 @@ namespace 服务器获取端口扫描
                 if (emails.Count < 1) break;
                 var email = emails[0];
                 emails.Remove(email);
-                emails.Remove(email);
                 //检查邮件是否查询过
-                if (false)
+                var isChecked = IsCheckDomainHost(email);
+                if (isChecked)
                 {
-                    //
                     continue;
                 }
                 var handler = new ManualResetEvent(false);
                 waits.Add(handler);
-                new Thread(new ParameterizedThreadStart(ScanPortWithHttp))
-                    .Start(new Tuple<string, int, EventWaitHandle>(email, 666, handler));
+                new Thread(new ParameterizedThreadStart(SeachWithMXSecond))
+                    .Start(new Tuple<string, EventWaitHandle>(email, handler));
             }
             if (waits.Count > 0)
             {
                 WaitHandlePlus.WaitALL(waits);
             }
-            await ScanPortMangerWithHttp(count, emails);
+            await SeachMangerWithMXSecond(count, emails);
         }
-        /// 端口扫描 HTTP
-        public static void ScanPortWithHttp(object obj)
+        /// 服务器查询 MX
+        public static void SeachWithMXSecond(object obj)
         {
-            var param = (Tuple<string, int, EventWaitHandle>)obj;
-            var host = param.Item1;
-            var port = param.Item2;
-            var eventWaitHanld = param.Item3;
+            var param = (Tuple<string, EventWaitHandle>)obj;
+            var email = param.Item1;
+            var eventWaitHanld = param.Item2;
+          
             try
             {
-
+                var host = Seacher.GetHostWithMX(email);
+                var domain = email.Split('@')[1];
+                if (host != null)
+                {
+                    DataSave.SaveHostSuccess(domain, host);
+                    //加入扫描任务
+                    ScanTasks.Enqueue(new Tuple<string, string>(domain, host));
+                }
+                else
+                {
+                    SeachTasksWithHttp.Enqueue(new Tuple<string, string>(domain,"smtp"));
+                }
             }
             catch (Exception ex)
             {
@@ -202,9 +317,61 @@ namespace 服务器获取端口扫描
         }
         #endregion
 
-        #region 多线程查询服务器----------------------------------
-        //多线程服务器查询管理器
-        public static async Task SreachHostManger(int count, List<string> emails)
+        #region 多线程执行服务器查询 HTTP方式------------------------
+        /// 多线程执行端口扫描管理器 HTTP
+        public static async Task SeachMangerWithHttp(int count, List<string> urls)
+        {
+            if (urls.Count < 1) return;
+            var waits = new List<EventWaitHandle>();
+            for (int i = 0; i < count; i++)
+            {
+                //邮件已经使用完，返回
+                if (urls.Count < 1) break;
+                var url = urls[0];
+                urls.Remove(url);
+                //检查邮件是否查询过
+                if (false)
+                {
+                    //
+                    continue;
+                }
+                var handler = new ManualResetEvent(false);
+                waits.Add(handler);
+                new Thread(new ParameterizedThreadStart(SeachWithHttp))
+                    .Start(new Tuple<string, EventWaitHandle>(url, handler));
+            }
+            if (waits.Count > 0)
+            {
+                WaitHandlePlus.WaitALL(waits);
+            }
+            await SeachMangerWithHttp(count, urls);
+        }
+        /// 端口扫描 HTTP
+        public static void SeachWithHttp(object obj)
+        {
+            var param = (Tuple<string, EventWaitHandle>)obj;
+            var url = param.Item1;
+            var eventWaitHanld = param.Item2;
+            try
+            {
+                WebRequestWithTimeout webRequestWithTimeout = new WebRequestWithTimeout(url, 2000);
+                var html = webRequestWithTimeout.Connect();
+                Console.WriteLine(html);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                eventWaitHanld.Set();
+            }
+        }
+        #endregion
+
+        #region 多线程端口扫描----------------------------------
+        //多线程端口扫描
+        public static async Task ScanPortManger(int count, List<string> emails)
         {
             if (emails.Count < 1) return;
           
@@ -224,33 +391,35 @@ namespace 服务器获取端口扫描
                 var handler = new ManualResetEvent(false);
                 waits.Add(handler);
                 new Thread(new ParameterizedThreadStart(SreachHost))
-                    .Start(new Tuple<string, EventWaitHandle>(email, handler));
+                    .Start(new Tuple<string,int, EventWaitHandle>(email,44, handler));
             }
             if (waits.Count > 0)
             {
                 WaitHandlePlus.WaitALL(waits);
             }
-            await SreachHostManger(count, emails);
+            await ScanPortManger(count, emails);
         }
-        //查询服务器
+        //端口扫描
         public static void SreachHost(object obj)
         {
-            var param = (Tuple<string, EventWaitHandle>)obj;
+            var param = (Tuple<string,int, EventWaitHandle>)obj;
             var email = param.Item1;
-            var handle = param.Item2;
+            var port = param.Item2;
+            var handle = param.Item3;
             try
             {
-                //var host = GetMailServer(email);
+                var host = Seacher.GetHostWithMX(email);
                 var domain = email.Split('@')[1];
-                if (false)
+                if (host != null)
                 {
-                    //线程执行
-                   // SaveHostSuccess(domain, host);
-
+                    //(Tuple<string, string>{ domain,host });
+                    //保存
+                    DataSave.SaveHostSuccess(domain, host);
+                    ScanTasks.Enqueue(new Tuple<string, string>(domain, host));
                 }
                 else
                 {
-                    //SaveHostFail(domain);
+                    SeachTasksSecondWithMX.Enqueue(domain);
                 }
             }
             catch (Exception ex)
@@ -264,5 +433,55 @@ namespace 服务器获取端口扫描
         }
         #endregion
 
+        #region 判断监测过 服务器，域名，端口---------------------
+        //判断域名是否已经监测过
+        public static bool IsCheckDomainHost(string email)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                try
+                {
+                    var domain = email.Split('@')[1];
+                    if (DomainHost.ContainsKey(domain))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        //判断域名是否已经监测过
+        public bool IsCheckDomainHostPort(string email)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                try
+                {
+                    var domain = email.Split('@')[1];
+                    if (DomainHostPort.ContainsKey(domain))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        #endregion
     }
 }
