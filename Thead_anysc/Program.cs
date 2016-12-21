@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -160,7 +163,7 @@ namespace Thead_anysc
             CCCCCC.Add(Thread.CurrentThread.ManagedThreadId.ToString());
             try
             {
-                Thread.Sleep(2000);
+                HttpBrowser3("https://www.baidu.com/");
                 Console.WriteLine("多线程id==={0}", Thread.CurrentThread.ManagedThreadId);
             }
             catch (Exception ex)
@@ -171,6 +174,52 @@ namespace Thead_anysc
             {
                 //信号
                 eventWaitHanld.Set();
+            }
+     
+
+    }
+        //异步方式
+        public static void HttpBorwser(string url)
+        {
+            HttpClient client = new HttpClient();
+            var _url = "http://" + url;
+            var result= client.GetStringAsync(_url).Result;
+            if (result.Contains(""))
+            {
+
+            }
+            else
+            {
+                
+            }
+        }
+        public static void HttpBroser2(string url)
+        {
+            Uri uri = new Uri(url);
+            WebRequest webReq = WebRequest.Create(uri);
+            WebResponse webRes = webReq.GetResponse();
+            HttpWebRequest myReq = (HttpWebRequest)webReq;
+            myReq.UserAgent = "User-Agent:Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705";
+            myReq.Accept = "*/*";
+            myReq.KeepAlive = true;
+            myReq.Headers.Add("Accept-Language", "zh-cn,en-us;q=0.5");
+            var result = (HttpWebResponse)myReq.GetResponse();
+            Stream receviceStream = result.GetResponseStream();
+            StreamReader readerOfStream = new StreamReader(receviceStream, System.Text.Encoding.GetEncoding("utf-8"));
+            var html = readerOfStream.ReadToEnd();
+            Console.WriteLine(html);
+           
+        }
+        public static void HttpBrowser3(string url)
+        {
+            try
+            {
+                WebRequestWithTimeout webRequestWithTimeout = new WebRequestWithTimeout(url, 2000);
+                var html= webRequestWithTimeout.Connect();
+                Console.WriteLine(html);
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
 
         }
