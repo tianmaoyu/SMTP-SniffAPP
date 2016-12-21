@@ -21,7 +21,6 @@ namespace 服务器获取端口扫描
         static DataSave dataSave = new DataSave();
         #endregion
         static UserConfigInfo userInfo = new UserConfigInfo();
-     
 
         static void Main(string[] args)
         {
@@ -30,6 +29,8 @@ namespace 服务器获取端口扫描
             int threadCount = userInfo.ThreadCount;
             RunSreachWithMXTask(userInfo);
             RunSreachWithMxTaskSecond(threadCount);
+            RunSreachWithHTTPTask(threadCount);
+
             Console.ReadKey();
         }
 
@@ -87,7 +88,6 @@ namespace 服务器获取端口扫描
 
         public static async Task RunSreachWithMxTaskSecond(int threadCount)
         {
-           
             await Task.Run(async () =>
             {
                 while (true)
@@ -105,13 +105,11 @@ namespace 服务器获取端口扫描
                             {
                                 emails.Add(str);
                             }
-                            //emails.Add("123@qq.com");
                         }
                         else
                         {
                             break;
                         }
-
                     }
                     #endregion
                     //是否暂停
@@ -122,14 +120,13 @@ namespace 服务器获取端口扫描
                     }
                     else
                     { 
-                        
                        await Task.Delay(2000);
                     }
                 }
             });
         }
         //异步运行查询:HTTP任务
-        public static async Task RunSreachWithHTTPTask()
+        public static async Task RunSreachWithHTTPTask(int countThread)
         {
             await Task.Run(async() =>
             {
@@ -138,18 +135,21 @@ namespace 服务器获取端口扫描
                 {
                     #region 要进行第二查询得到 emails
                     Console.WriteLine("HTTP开始运行");
-                    List<string> emails = new List<string>();
+                    List<string> urls = new List<string>();
                     for (int i = 0; i <= 300; i++)
                     {
-                        if (SeachTasksSecondWithMX.Count > 1)
+                        if (SeachTasksWithHttp.Count > 1)
                         {
-                            string str = null;
-                            var _str = SeachTasksSecondWithMX.TryDequeue(out str);
-                            if (_str != null)
+                            Tuple<string,string> tuple = null;
+                            var _str = SeachTasksWithHttp.TryDequeue(out tuple);
+                            if (tuple != null)
                             {
-                                emails.Add(str);
+                                var domain = tuple.Item1;
+                                var name = tuple.Item2;
+                                string url = "http://" + name + "." + "domain";
+                                urls.Add(url);
                             }
-                            //emails.Add("123@qq.com");
+                            
                         }
                         else
                         {
@@ -161,7 +161,7 @@ namespace 服务器获取端口扫描
                     //队列中是否有任务
                     if (true)
                     {
-
+                        await SeachMangerWithHttp(countThread, urls);
                     }
                     else
                     {
@@ -356,11 +356,17 @@ namespace 服务器获取端口扫描
             {
                 WebRequestWithTimeout webRequestWithTimeout = new WebRequestWithTimeout(url, 2000);
                 var html = webRequestWithTimeout.Connect();
-                Console.WriteLine(html);
+                var domain = url.Substring(12);
+                var host = url.Replace("http://","");
+                DataSave.SaveHostSuccess(domain, host);
             }
             catch (Exception ex)
             {
-
+                if (url.Contains("smtp"))
+                {
+                    var domain = url.Substring(12);
+                    SeachTasksWithHttp.Enqueue(new Tuple<string, string>(domain, "mail"));
+                }
             }
             finally
             {
@@ -368,6 +374,7 @@ namespace 服务器获取端口扫描
             }
         }
         #endregion
+
 
         #region 多线程端口扫描----------------------------------
         //多线程端口扫描
