@@ -20,6 +20,15 @@ namespace 服务器获取端口扫描
         static ConcurrentBag<int> Ports = new ConcurrentBag<int> { 25, 587, 465 };
         static DataSave dataSave = new DataSave();
         #endregion
+        //成功的列表
+        static volatile Dictionary<String, String> SuccessDomainHost = new Dictionary<string, string>();
+        static volatile Dictionary<string, Tuple<string, int>> SuccessDomainHostPort = new Dictionary<string, Tuple<string, int>>();
+        //任务队列
+        static volatile Queue<String> MXTaksQueue = new Queue<string>();
+        static volatile Queue<Tuple<string, string>> HttpTasksQueue = new Queue<Tuple<string, string>>();
+        static volatile Queue<Tuple<string, int>> ScanPortTasksQueue = new Queue<Tuple<string, int>>();
+        static volatile List<int> PortList = new List<int> { 25, 587, 465 };
+
         static UserConfigInfo userInfo = new UserConfigInfo();
 
         static void Main(string[] args)
