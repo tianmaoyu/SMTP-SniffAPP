@@ -18,7 +18,7 @@ namespace 服务器获取端口扫描
             mutex.WaitOne(); 
             using (StreamWriter sw = new StreamWriter(CheckFile("domain-host-success.txt"), true, Encoding.Default))
             {
-                sw.WriteLine(string.Format("{0}${1}", domain, host));
+                sw.WriteLine(string.Format("{0}${1}",  domain, host));
             }
             mutex.ReleaseMutex(); 
         }
@@ -34,22 +34,22 @@ namespace 服务器获取端口扫描
         }
 
         //报存扫描到打开的端口
-        static public void SaveServerAndPortSuccess(string server, string port)
+        static public void SaveServerAndPortSuccess(string host, string port,string email)
         {
             mutex.WaitOne(); 
-            using (StreamWriter sw = new StreamWriter(CheckFile("host-port-success.txt"), true, Encoding.Default))
+            using (StreamWriter sw = new StreamWriter(CheckFile("成功.txt"), true, Encoding.Default))
             {
-                sw.WriteLine(string.Format("{0}${1}", server, port));
+                sw.WriteLine(string.Format("{0}${1}${2}", email, port, host));
             }
             mutex.ReleaseMutex(); 
         }
         //报存扫描到打开的端口
-        static public void SaveServerAndPortFail(string server, string port)
+        static public void SaveServerAndPortFail(string server, string port,string email)
         {
             mutex.WaitOne(); 
-            using (StreamWriter sw = new StreamWriter(CheckFile("host-port-fail.txt"), true, Encoding.Default))
+            using (StreamWriter sw = new StreamWriter(CheckFile("失败.txt"), true, Encoding.Default))
             {
-                sw.WriteLine(string.Format("{0}${1}", server, port));
+                sw.WriteLine(string.Format("{0}${1}${2}", email, port, server));
             }
             mutex.ReleaseMutex(); 
         }

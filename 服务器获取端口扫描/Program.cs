@@ -26,14 +26,19 @@ namespace 服务器获取端口扫描
         static volatile Dictionary<string, Tuple<string, int>> SuccessDomainHostPort = new Dictionary<string, Tuple<string, int>>();
         //任务队列
         static volatile Queue<String> MXTaksQueue = new Queue<string>();
-        static volatile Queue<Tuple<string, string>> HttpTasksQueue = new Queue<Tuple<string, string>>();
-        static volatile Queue<Tuple<string,string,int>> ScanPortTasksQueue = new Queue<Tuple<string,string, int>>();
+        static volatile Queue<Tuple<string, string,string>> HttpTasksQueue = new Queue<Tuple<string, string, string>>();
+        static volatile Queue<Tuple<string,string,string,int>> ScanPortTasksQueue = new Queue<Tuple<string,string,string, int>>();
         static volatile List<int> PortList = new List<int> { 25, 587, 465 };
-
         static UserConfigInfo userInfo = new UserConfigInfo();
+        //邮件进度
+        static volatile int EmailProgess=0;
+        static volatile int EmailTotal = 0;
+        //记录
+        static int _count = 0;
 
         static void Main(string[] args)
         {
+            EmailTotal = userInfo.Emails.Count;
            TimerCallback timerCallback = new TimerCallback(PrintInfo);
             Timer timer = new Timer(timerCallback, null, 200, 2000);
             int threadCount = userInfo.ThreadCount;
@@ -52,10 +57,16 @@ namespace 服务器获取端口扫描
             //已经查询的次数
             //查询陈功数量
             //端口扫描次数
-            //端口成功的个数
-            Console.WriteLine("MX成功数量为：{0}", ScanTasks.Count);
-            Console.WriteLine("MX失败数量为：{0}", SeachTasksSecondWithMX.Count);
-            Console.WriteLine("HTTP查询等待数量：{0}", SeachTasksWithHttp.Count);
+            //端口成功的个数 
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("总数：{0}", EmailTotal);
+            Console.SetCursorPosition(0, 1);
+            Console.WriteLine("进度:{0}", EmailProgess);
+            Console.SetCursorPosition(0, 2);
+            Console.WriteLine("服务器查询成功：{0}", SuccessDomainHost.Count);
+            Console.SetCursorPosition(0, 3);
+            Console.WriteLine("端口扫描成功：{0}", SuccessDomainHostPort.Count);
+           
         }
         //保存成果
         public static void SaveResult(object obj)
@@ -108,14 +119,13 @@ namespace 服务器获取端口扫描
                 while (true)
                 {
                     #region 要进行第二查询得到 emails
-                    Console.WriteLine("第二次开始运行");
                     List<string> emails = new List<string>();
                     for (int i = 0; i <= 300; i++)
                     {
-                        if (SeachTasksSecondWithMX.Count > 1)
+                        if (MXTaksQueue.Count >0)
                         {
-                            string str = null;
-                            var _str = SeachTasksSecondWithMX.TryDequeue(out str);
+                          
+                            var str = MXTaksQueue.Dequeue();
                             if (str != null)
                             {
                                 emails.Add(str);
@@ -149,20 +159,20 @@ namespace 服务器获取端口扫描
                 while (true)
                 {
                     #region 要进行第二查询得到 emails
-                    Console.WriteLine("HTTP开始运行");
-                    List<string> urls = new List<string>();
+                    List<Tuple<string,string> > urlMails = new List<Tuple<string,string>>();
                     for (int i = 0; i <= 300; i++)
                     {
-                        if (SeachTasksWithHttp.Count > 1)
+                        if (HttpTasksQueue.Count > 0)
                         {
-                            Tuple<string,string> tuple = null;
-                            var _str = SeachTasksWithHttp.TryDequeue(out tuple);
+                            //Tuple<string,string> tuple = null;
+                            var tuple = HttpTasksQueue.Dequeue();
                             if (tuple != null)
                             {
                                 var domain = tuple.Item1;
                                 var name = tuple.Item2;
+                                var email = tuple.Item3;
                                 string url = "http://" + name + "." + domain;
-                                urls.Add(url);
+                                urlMails.Add(new Tuple<string, string>(url, email));
                             }
                             
                         }
@@ -174,9 +184,9 @@ namespace 服务器获取端口扫描
                     }
                     #endregion
                     //队列中是否有任务
-                    if (true)
+                    if (true&& urlMails.Count>1)
                     {
-                        await SeachMangerWithHttp(countThread, urls);
+                        await SeachMangerWithHttp(countThread, urlMails);
                     }
                     else
                     {
@@ -194,7 +204,7 @@ namespace 服务器获取端口扫描
                 while (true)
                 {
                     //队列中是否有任务
-                    List<Tuple<string,string, int>> hostPort = new List<Tuple<string,string, int>>();
+                    List<Tuple<string,string,string, int>> hostPort = new List<Tuple<string,string,string, int>>();
                     for(int i=0;i< 300; i++)
                     {
                         if (ScanPortTasksQueue.Count > 0)
@@ -207,7 +217,7 @@ namespace 服务器获取端口扫描
                             break;
                         }
                     }
-                    if (hostPort.Count>1)
+                    if (hostPort.Count>0)
                     {
                         await ScanPortManger(countThread, hostPort);
                     }
@@ -218,8 +228,6 @@ namespace 服务器获取端口扫描
                 }
             });
         }
-        //异步输出成果
-        public static async Task
         #endregion 任务结束
 
         #region 多选线程端服务器查询MX方式-----------------------------
@@ -230,6 +238,7 @@ namespace 服务器获取端口扫描
             var waits = new List<EventWaitHandle>();
             for (int i = 0; i < count; i++)
             {
+                EmailProgess++;
                 //邮件已经使用完，返回
                 if (emails.Count < 1) break;
                 var email = emails[0];
@@ -265,8 +274,8 @@ namespace 服务器获取端口扫描
                 {
                     DataSave.SaveHostSuccess(domain, host);
                     //加入扫描任务
-                    ScanTasks.Enqueue(new Tuple<string, string>(domain, host));
-                    ScanPortTasksQueue.Enqueue(new Tuple<string,string, int>(domain,host, 25));
+                    //ScanTasks.Enqueue(new Tuple<string, string>(domain, host));
+                    ScanPortTasksQueue.Enqueue(new Tuple<string,string,string,int>(domain,host,email, 25));
                     if (!SuccessDomainHost.Keys.Contains(domain))
                     {
                         SuccessDomainHost.Add(domain, host);
@@ -274,8 +283,8 @@ namespace 服务器获取端口扫描
                 }
                 else
                 {
-                    SeachTasksSecondWithMX.Enqueue(domain);
-                    MXTaksQueue.Enqueue(domain);
+                    //SeachTasksSecondWithMX.Enqueue(domain);
+                    MXTaksQueue.Enqueue(email);
                 }
             }
             catch(Exception ex)
@@ -334,7 +343,7 @@ namespace 服务器获取端口扫描
                     //保存和，加入扫描任务
                     DataSave.SaveHostSuccess(domain, host);
                     ScanTasks.Enqueue(new Tuple<string, string>(domain, host));
-                    ScanPortTasksQueue.Enqueue(new Tuple<string,string, int>(domain,host,25));
+                    ScanPortTasksQueue.Enqueue(new Tuple<string,string,string, int>(domain,host, email,25));
                     if (!SuccessDomainHost.Keys.Contains(domain))
                     {
                         SuccessDomainHost.Add(domain, host);
@@ -342,8 +351,8 @@ namespace 服务器获取端口扫描
                 }
                 else
                 {
-                    SeachTasksWithHttp.Enqueue(new Tuple<string, string>(domain,"smtp"));
-                    HttpTasksQueue.Enqueue(new Tuple<string, string>(domain, "smtp"));
+                    //SeachTasksWithHttp.Enqueue(new Tuple<string, string>(domain,"smtp"));
+                    HttpTasksQueue.Enqueue(new Tuple<string,string,string>(domain, "smtp", email));
                 }
             }
             catch (Exception ex)
@@ -359,39 +368,34 @@ namespace 服务器获取端口扫描
 
         #region 多线程执行服务器查询 HTTP方式------------------------
         /// 多线程执行端口扫描管理器 HTTP
-        public static async Task SeachMangerWithHttp(int count, List<string> urls)
+        public static async Task SeachMangerWithHttp(int count, List<Tuple<string,string>> urlMails)
         {
-            if (urls.Count < 1) return;
+            if (urlMails.Count < 1) return;
             var waits = new List<EventWaitHandle>();
             for (int i = 0; i < count; i++)
             {
                 //邮件已经使用完，返回
-                if (urls.Count < 1) break;
-                var url = urls[0];
-                urls.Remove(url);
-                //检查邮件是否查询过
-                if (false)
-                {
-                    //
-                    continue;
-                }
+                if (urlMails.Count < 1) break;
+                var urlMail = urlMails[0];
+                urlMails.Remove(urlMail);
                 var handler = new ManualResetEvent(false);
                 waits.Add(handler);
                 new Thread(new ParameterizedThreadStart(SeachWithHttp))
-                    .Start(new Tuple<string, EventWaitHandle>(url, handler));
+                    .Start(new Tuple<string,string, EventWaitHandle>(urlMail.Item1,urlMail.Item2, handler));
             }
             if (waits.Count > 0)
             {
-                WaitHandlePlus.WaitALL(waits);
+                WaitHandlePlus.WaitALL(waits,6000);
             }
-            await SeachMangerWithHttp(count, urls);
+            await SeachMangerWithHttp(count, urlMails);
         }
         /// 端口扫描 HTTP
         public static void SeachWithHttp(object obj)
         {
-            var param = (Tuple<string, EventWaitHandle>)obj;
+            var param = (Tuple<string,string, EventWaitHandle>)obj;
             var url = param.Item1;
-            var eventWaitHanld = param.Item2;
+            var email = param.Item2;
+            var eventWaitHanld = param.Item3;
             try
             {
                 WebRequestWithTimeout webRequestWithTimeout = new WebRequestWithTimeout(url, 2000);
@@ -402,7 +406,15 @@ namespace 服务器获取端口扫描
                     var host = url.Substring(7);
                     DataSave.SaveHostSuccess(domain, host);
                     SuccessDomainHost.Add(domain, host);
-                    ScanPortTasksQueue.Enqueue(new Tuple<string,string,int>(domain,host, 25));
+                    ScanPortTasksQueue.Enqueue(new Tuple<string,string,string,int>(domain,host, email, 25));
+                }
+                else
+                {
+                    if (url.Contains("smtp"))
+                    {
+                        var domain = url.Substring(12);
+                        HttpTasksQueue.Enqueue(new Tuple<string, string,string>(domain, "mail", email));
+                    }
                 }
            
             }
@@ -411,8 +423,7 @@ namespace 服务器获取端口扫描
                 if (url.Contains("smtp"))
                 {
                     var domain = url.Substring(12);
-                    SeachTasksWithHttp.Enqueue(new Tuple<string, string>(domain, "mail"));
-                    HttpTasksQueue.Enqueue(new Tuple<string, string>(domain, "mail"));
+                    HttpTasksQueue.Enqueue(new Tuple<string, string,string>(domain, "mail",email));
                 }
             }
             finally
@@ -424,7 +435,7 @@ namespace 服务器获取端口扫描
 
         #region 多线程端口扫描----------------------------------
         //多线程端口扫描
-        public static async Task ScanPortManger(int count, List<Tuple<string,string,int>> hostPorts)
+        public static async Task ScanPortManger(int count, List<Tuple<string,string,string,int>> hostPorts)
         {
             if (hostPorts.Count < 1) return;
             var waits = new List<EventWaitHandle>();
@@ -436,11 +447,12 @@ namespace 服务器获取端口扫描
                 hostPorts.Remove(hostPort);
                 var domian = hostPort.Item1;
                 var host = hostPort.Item2;
-                var port = hostPort.Item3;
+                var email = hostPort.Item3;
+                var port = hostPort.Item4;
                 var handler = new ManualResetEvent(false);
                 waits.Add(handler);
                 new Thread(new ParameterizedThreadStart(ScanPort))
-                    .Start(new Tuple<string,string,int, EventWaitHandle>(domian,host, port, handler));
+                    .Start(new Tuple<string,string,string,int, EventWaitHandle>(domian,host,email, port, handler));
             }
             if (waits.Count > 0)
             {
@@ -451,11 +463,12 @@ namespace 服务器获取端口扫描
         //端口扫描
         public static void ScanPort(object obj)
         {
-            var param = (Tuple<string,string,int, EventWaitHandle>)obj;
+            var param = (Tuple<string,string,string,int, EventWaitHandle>)obj;
             var domain = param.Item1;
             var host = param.Item2;
-            var port = param.Item3;
-            var handle = param.Item4;
+            var email = param.Item3;
+            var port = param.Item4;
+            var handle = param.Item5;
             try
             {
                 TcpClient connection = new TcpClientWithTimeout(host, port, 2000).Connect();
@@ -464,7 +477,7 @@ namespace 服务器获取端口扫描
                     if (connection.Connected)
                     {
                         SuccessDomainHostPort.Add(domain, new Tuple<string, int>(host, port));
-                        DataSave.SaveServerAndPortSuccess(host, port.ToString());
+                        DataSave.SaveServerAndPortSuccess(host, port.ToString(),email);
                         connection.Close();
                     }
                 }
@@ -474,11 +487,11 @@ namespace 服务器获取端口扫描
                     if(PortList.Count> index + 1)
                     {
                         var _port = PortList[index];
-                        ScanPortTasksQueue.Enqueue(new Tuple<string, string, int>(domain, host, _port));
+                        ScanPortTasksQueue.Enqueue(new Tuple<string, string,string, int>(domain, host, email, _port));
                     }
                     else
                     {
-                        DataSave.SaveServerAndPortFail(host, port.ToString());
+                        DataSave.SaveServerAndPortFail(host, port.ToString(),email);
                     }
                     connection.Close();
                     connection = null;
@@ -490,11 +503,11 @@ namespace 服务器获取端口扫描
                 if (PortList.Count > index + 1)
                 {
                     var _port = PortList[index];
-                    ScanPortTasksQueue.Enqueue(new Tuple<string, string, int>(domain, host, _port));
+                    ScanPortTasksQueue.Enqueue(new Tuple<string, string,string, int>(domain, host, email, _port));
                 }
                 else
                 {
-                    DataSave.SaveServerAndPortFail(host, port.ToString());
+                    DataSave.SaveServerAndPortFail(host, port.ToString(),email);
                 }
             }
             finally
