@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thead_anysc", "Thead_anysc\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "服务器获取端口扫描", "服务器获取端口扫描\服务器获取端口扫描.csproj", "{954ABA94-1C55-4A98-A162-A08684F007FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "查找注册与登录", "查找注册与登录\查找注册与登录.csproj", "{754C5D4C-AA35-4892-BE9A-4BCE99148B9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{954ABA94-1C55-4A98-A162-A08684F007FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{954ABA94-1C55-4A98-A162-A08684F007FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{954ABA94-1C55-4A98-A162-A08684F007FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{754C5D4C-AA35-4892-BE9A-4BCE99148B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{754C5D4C-AA35-4892-BE9A-4BCE99148B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{754C5D4C-AA35-4892-BE9A-4BCE99148B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{754C5D4C-AA35-4892-BE9A-4BCE99148B9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
