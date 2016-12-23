@@ -12,6 +12,7 @@ namespace 查找注册与登录
         public int ThreadCount { set; get; }
         public List<string> Emails { set; get; }
         private string emailFile = null;
+        public int StartLine = 0;
         public UserConfigInfo()
         {
             ReadConfig();
@@ -37,7 +38,7 @@ namespace 查找注册与登录
             List<string> configInf = File.ReadAllLines("配置文件.txt", Encoding.Default).ToList();
             emailFile = configInf[0].Split('$')[1];
             ThreadCount = Int32.Parse(configInf[1].Split('$')[1]);
-         
+            StartLine = Int32.Parse(configInf[2].Split('$')[1]);
         }
     }
 }

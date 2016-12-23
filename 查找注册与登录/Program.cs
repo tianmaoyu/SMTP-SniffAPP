@@ -41,6 +41,11 @@ namespace 查找注册与登录
                     sw.WriteLine(url);
                 }
             }
+            if(urls.Count> userConfigInfo.StartLine)
+            {
+                urls.RemoveRange(0, userConfigInfo.StartLine);
+                Progress += userConfigInfo.StartLine;
+            }
             Console.WriteLine("数据分类完成，开始查询");
             #endregion 读取去重复完成
             TimerCallback timerCallBack = new TimerCallback(PrintInfo);
