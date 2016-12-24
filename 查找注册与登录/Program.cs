@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace 查找注册与登录
 {
+    public delegate void DelegateHttpSearch(string str);
     class Program
     {
         static UserConfigInfo userConfigInfo = new UserConfigInfo();
@@ -33,7 +34,7 @@ namespace 查找注册与登录
                 }
             });
             userConfigInfo.Emails.Clear();
-            var urls = domians2.Distinct().Select(item => "http://www." + item).ToList();
+             List<string>  urls = domians2.Distinct().Select(item => "http://www." + item).ToList();
             using (StreamWriter sw = new StreamWriter(CheckFile("删除重复.txt"), false, Encoding.Default))
             {
                 foreach (string url in urls)
@@ -41,7 +42,7 @@ namespace 查找注册与登录
                     sw.WriteLine(url);
                 }
             }
-            if(urls.Count> userConfigInfo.StartLine)
+            if (urls.Count > userConfigInfo.StartLine)
             {
                 urls.RemoveRange(0, userConfigInfo.StartLine);
                 Progress += userConfigInfo.StartLine;
@@ -51,25 +52,32 @@ namespace 查找注册与登录
             TimerCallback timerCallBack = new TimerCallback(PrintInfo);
             Timer timer = new Timer(timerCallBack, null, 5000, 2000);
             Total = urls.Count;
+            int treadCount = userConfigInfo.ThreadCount;
             //SeachMangerWithHttp(userConfigInfo.ThreadCount, urls);
-        
+            userConfigInfo.Dispose();
+            int timeOut = 3;
+            if (userConfigInfo.TimeOut > 0 && userConfigInfo.TimeOut < 10)
+            {
+                timeOut = userConfigInfo.TimeOut;
+            }
             for (int i = 0; i < urls.Count; i++)
             {
-                if (urls.Count > 1000)
+                if (urls.Count > userConfigInfo.ThreadCount)
                 {
-                    var _urls = urls.GetRange(0, 10000);
-                    urls.RemoveRange(0, 10000);
-                    SeachMangerWithHttp(userConfigInfo.ThreadCount, _urls);
+                    var _urls = urls.GetRange(0, userConfigInfo.ThreadCount);
+                    urls.RemoveRange(0, userConfigInfo.ThreadCount);
+                    ThreadManger(userConfigInfo.ThreadCount, _urls, timeOut*1000);
                 }
                 else
                 {
-                    SeachMangerWithHttp(userConfigInfo.ThreadCount, urls);
+                    ThreadManger(userConfigInfo.ThreadCount, urls, timeOut * 1000);
                     urls.Clear();
                 }
-          
             }
+            Console.WriteLine("运行完成");
             Console.ReadKey();
         }
+
 
         //打印程序
         public static void PrintInfo(object obj)
@@ -84,8 +92,48 @@ namespace 查找注册与登录
             Console.Write("进度:{0}", Progress);
             Console.WriteLine();
         }
+      
+
+        public static void ThreadManger(int count, List<string> urls,int timeOut)
+        {
+            Thread thread = new Thread(() => MultiThread(count, urls));
+            try
+            {
+                thread.IsBackground = true;
+                thread.Start();
+                thread.Join(timeOut);
+                thread.Abort();
+            }
+            catch (Exception ex)
+            {
+                thread.Abort();
+            }
+
+        }
+        public static void MultiThread(int count, List<string> urls)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var url = urls[i];
+                var thread = new Thread(() => SeachHttp2(url));
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+        public static void Thread1()
+        {
+            for (int i = 1; i < 1000; i++)
+            {//每运行一个循环就写一个“1”
+
+                Console.Write("1");
+            }
+        }
+        public static void HttpSeacher(object obj)
+        {
+
+        }
         /// 多线程执行端口扫描管理器 HTTP
-        public static void SeachMangerWithHttp(int count, List<string> urls)
+        public static void SeachMangerWithHttp(int count, List<string> urls, int timeOut)
         {
             if (urls.Count < 1) return;
             var waits = new List<EventWaitHandle>();
@@ -103,9 +151,9 @@ namespace 查找注册与登录
             }
             if (waits.Count > 0)
             {
-                WaitHandlePlus.WaitALL(waits, 3000);
+                WaitHandlePlus.WaitALL(waits, timeOut * 1000);
             }
-            SeachMangerWithHttp(count, urls);
+            SeachMangerWithHttp(count, urls, timeOut);
         }
         /// 端口扫描 HTTP
         public static void SeachWithHttp(object obj)
@@ -170,49 +218,48 @@ namespace 查找注册与登录
             mutex.ReleaseMutex();
         }
 
-        
 
-        static async  public Task SeachHttpAnsyc(string url)
+
+        static public void SeachHttp2(string url)
         {
-             await Task.Run(() => {
-                try
+            try
+            {
+                Progress++;
+                WebRequestWithTimeout webRequestWithTimeout = new WebRequestWithTimeout(url, 2000);
+                var html = webRequestWithTimeout.Connect();
+                if (html != null)
                 {
-                     Progress++;
-                     WebRequestWithTimeout webRequestWithTimeout = new WebRequestWithTimeout(url, 2000);
-                    var html = webRequestWithTimeout.Connect();
-                    if (html != null)
+                    SuccusscCount++;
+                    if (html.Contains("注册"))
                     {
-                        SuccusscCount++;
-                        if (html.Contains("注册"))
-                        {
-                            SaveData(url, "注册.txt");
-                        }
-                        if (html.Contains("登录"))
-                        {
-                            SaveData(url, "登录.txt");
-                        }
-                        if (html.Contains("登录") && html.Contains("注册"))
-                        {
-                            SaveData(url, "登录注册.txt");
-                        }
+                        SaveData(url, "注册.txt");
                     }
-                    else
+                    if (html.Contains("登录"))
                     {
-                        FailCount++;
-                        SaveData(url, "失败.txt");
+                        SaveData(url, "登录.txt");
+                    }
+                    if (html.Contains("登录") && html.Contains("注册"))
+                    {
+                        SaveData(url, "登录注册.txt");
                     }
                 }
-                catch (Exception ex)
+                else
                 {
                     FailCount++;
                     SaveData(url, "失败.txt");
                 }
-                finally
-                {
-                  
-                }
-            });
-           
+            }
+            catch (Exception ex)
+            {
+                FailCount++;
+                SaveData(url, "失败.txt");
+            }
+            finally
+            {
+
+            }
         }
+
     }
 }
+
