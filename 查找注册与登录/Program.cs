@@ -32,8 +32,8 @@ namespace 查找注册与登录
                     domians2.Add(domian);
                 }
             });
-            var domains3 = domians2.Distinct().ToList();
-            var urls = domains3.Select(item => "http://www." + item).ToList();
+            userConfigInfo.Emails.Clear();
+            var urls = domians2.Distinct().Select(item => "http://www." + item).ToList();
             using (StreamWriter sw = new StreamWriter(CheckFile("删除重复.txt"), false, Encoding.Default))
             {
                 foreach (string url in urls)
@@ -51,7 +51,24 @@ namespace 查找注册与登录
             TimerCallback timerCallBack = new TimerCallback(PrintInfo);
             Timer timer = new Timer(timerCallBack, null, 5000, 2000);
             Total = urls.Count;
-            SeachMangerWithHttp(userConfigInfo.ThreadCount, urls);
+            //SeachMangerWithHttp(userConfigInfo.ThreadCount, urls);
+        
+            for (int i = 0; i < urls.Count; i++)
+            {
+                if (urls.Count > 1000)
+                {
+                    var _urls = urls.GetRange(0, 10000);
+                    urls.RemoveRange(0, 10000);
+                    SeachMangerWithHttp(userConfigInfo.ThreadCount, _urls);
+                }
+                else
+                {
+                    SeachMangerWithHttp(userConfigInfo.ThreadCount, urls);
+                    urls.Clear();
+                }
+          
+            }
+            Console.ReadKey();
         }
 
         //打印程序
@@ -86,7 +103,7 @@ namespace 查找注册与登录
             }
             if (waits.Count > 0)
             {
-                WaitHandlePlus.WaitALL(waits, 6000);
+                WaitHandlePlus.WaitALL(waits, 3000);
             }
             SeachMangerWithHttp(count, urls);
         }
@@ -151,6 +168,51 @@ namespace 查找注册与登录
                 sw.WriteLine(str);
             }
             mutex.ReleaseMutex();
+        }
+
+        
+
+        static async  public Task SeachHttpAnsyc(string url)
+        {
+             await Task.Run(() => {
+                try
+                {
+                     Progress++;
+                     WebRequestWithTimeout webRequestWithTimeout = new WebRequestWithTimeout(url, 2000);
+                    var html = webRequestWithTimeout.Connect();
+                    if (html != null)
+                    {
+                        SuccusscCount++;
+                        if (html.Contains("注册"))
+                        {
+                            SaveData(url, "注册.txt");
+                        }
+                        if (html.Contains("登录"))
+                        {
+                            SaveData(url, "登录.txt");
+                        }
+                        if (html.Contains("登录") && html.Contains("注册"))
+                        {
+                            SaveData(url, "登录注册.txt");
+                        }
+                    }
+                    else
+                    {
+                        FailCount++;
+                        SaveData(url, "失败.txt");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    FailCount++;
+                    SaveData(url, "失败.txt");
+                }
+                finally
+                {
+                  
+                }
+            });
+           
         }
     }
 }
