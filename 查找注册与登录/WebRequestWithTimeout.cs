@@ -55,6 +55,7 @@ namespace 查找注册与登录
             {
                 Uri uri = new Uri(url);
                 WebRequest webReq = WebRequest.Create(uri);
+                webReq.Timeout=3000;
                 WebResponse webRes = webReq.GetResponse();
                 HttpWebRequest myReq = (HttpWebRequest)webReq;
                 myReq.UserAgent = "User-Agent:Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705";
