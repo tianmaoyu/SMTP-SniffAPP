@@ -37,6 +37,11 @@
             this.textBox_host = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox_start = new System.Windows.Forms.TextBox();
+            this.textBox_end = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btn_class = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox_email_file
@@ -76,7 +81,7 @@
             // radioButton_all
             // 
             this.radioButton_all.AutoSize = true;
-            this.radioButton_all.Location = new System.Drawing.Point(73, 151);
+            this.radioButton_all.Location = new System.Drawing.Point(73, 186);
             this.radioButton_all.Name = "radioButton_all";
             this.radioButton_all.Size = new System.Drawing.Size(71, 16);
             this.radioButton_all.TabIndex = 2;
@@ -87,7 +92,7 @@
             // radioButton_and_before
             // 
             this.radioButton_and_before.AutoSize = true;
-            this.radioButton_and_before.Location = new System.Drawing.Point(73, 129);
+            this.radioButton_and_before.Location = new System.Drawing.Point(73, 164);
             this.radioButton_and_before.Name = "radioButton_and_before";
             this.radioButton_and_before.Size = new System.Drawing.Size(41, 16);
             this.radioButton_and_before.TabIndex = 2;
@@ -113,7 +118,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(162, 144);
+            this.button1.Location = new System.Drawing.Point(162, 183);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 23);
             this.button1.TabIndex = 3;
@@ -121,14 +126,63 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 130);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "大写";
+            // 
+            // textBox_start
+            // 
+            this.textBox_start.Location = new System.Drawing.Point(74, 124);
+            this.textBox_start.Name = "textBox_start";
+            this.textBox_start.Size = new System.Drawing.Size(60, 21);
+            this.textBox_start.TabIndex = 4;
+            this.textBox_start.Text = "0";
+            // 
+            // textBox_end
+            // 
+            this.textBox_end.Location = new System.Drawing.Point(190, 125);
+            this.textBox_end.Name = "textBox_end";
+            this.textBox_end.Size = new System.Drawing.Size(67, 21);
+            this.textBox_end.TabIndex = 4;
+            this.textBox_end.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(138, 130);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 12);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "-------";
+            // 
+            // btn_class
+            // 
+            this.btn_class.Location = new System.Drawing.Point(162, 153);
+            this.btn_class.Name = "btn_class";
+            this.btn_class.Size = new System.Drawing.Size(95, 23);
+            this.btn_class.TabIndex = 5;
+            this.btn_class.Text = "分类密码";
+            this.btn_class.UseVisualStyleBackColor = true;
+            this.btn_class.Click += new System.EventHandler(this.btn_class_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 187);
+            this.ClientSize = new System.Drawing.Size(284, 226);
+            this.Controls.Add(this.btn_class);
+            this.Controls.Add(this.textBox_end);
+            this.Controls.Add(this.textBox_start);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.radioButton_and_before);
             this.Controls.Add(this.radioButton_all);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label_email);
@@ -153,6 +207,11 @@
         private System.Windows.Forms.TextBox textBox_host;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox_start;
+        private System.Windows.Forms.TextBox textBox_end;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_class;
     }
 }
 
