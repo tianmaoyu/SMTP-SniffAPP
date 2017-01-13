@@ -42,6 +42,16 @@
             this.textBox_end = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_class = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox_number = new System.Windows.Forms.CheckBox();
+            this.checkBox_letter = new System.Windows.Forms.CheckBox();
+            this.textBox_rand_count = new System.Windows.Forms.TextBox();
+            this.textBox_fixed_password = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.checkBox_Symbol = new System.Windows.Forms.CheckBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox_email_file
@@ -170,11 +180,108 @@
             this.btn_class.UseVisualStyleBackColor = true;
             this.btn_class.Click += new System.EventHandler(this.btn_class_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBox_Symbol);
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.checkBox_number);
+            this.groupBox1.Controls.Add(this.checkBox_letter);
+            this.groupBox1.Controls.Add(this.textBox_rand_count);
+            this.groupBox1.Controls.Add(this.textBox_fixed_password);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Location = new System.Drawing.Point(12, 224);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(273, 153);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "密码生产";
+            // 
+            // checkBox_number
+            // 
+            this.checkBox_number.AutoSize = true;
+            this.checkBox_number.Checked = true;
+            this.checkBox_number.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_number.Location = new System.Drawing.Point(211, 59);
+            this.checkBox_number.Name = "checkBox_number";
+            this.checkBox_number.Size = new System.Drawing.Size(48, 16);
+            this.checkBox_number.TabIndex = 15;
+            this.checkBox_number.Text = "数字";
+            this.checkBox_number.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_letter
+            // 
+            this.checkBox_letter.AutoSize = true;
+            this.checkBox_letter.Checked = true;
+            this.checkBox_letter.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_letter.Location = new System.Drawing.Point(155, 59);
+            this.checkBox_letter.Name = "checkBox_letter";
+            this.checkBox_letter.Size = new System.Drawing.Size(48, 16);
+            this.checkBox_letter.TabIndex = 14;
+            this.checkBox_letter.Text = "字母";
+            this.checkBox_letter.UseVisualStyleBackColor = true;
+            // 
+            // textBox_rand_count
+            // 
+            this.textBox_rand_count.Location = new System.Drawing.Point(75, 54);
+            this.textBox_rand_count.Name = "textBox_rand_count";
+            this.textBox_rand_count.Size = new System.Drawing.Size(61, 21);
+            this.textBox_rand_count.TabIndex = 12;
+            this.textBox_rand_count.Text = "6";
+            // 
+            // textBox_fixed_password
+            // 
+            this.textBox_fixed_password.Location = new System.Drawing.Point(76, 24);
+            this.textBox_fixed_password.Name = "textBox_fixed_password";
+            this.textBox_fixed_password.Size = new System.Drawing.Size(183, 21);
+            this.textBox_fixed_password.TabIndex = 13;
+            this.textBox_fixed_password.Text = "password";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "随机位数";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 27);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 12);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "固定生产";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(178, 111);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 16;
+            this.button2.Text = "生产密码";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // checkBox_Symbol
+            // 
+            this.checkBox_Symbol.AutoSize = true;
+            this.checkBox_Symbol.Location = new System.Drawing.Point(210, 81);
+            this.checkBox_Symbol.Name = "checkBox_Symbol";
+            this.checkBox_Symbol.Size = new System.Drawing.Size(48, 16);
+            this.checkBox_Symbol.TabIndex = 17;
+            this.checkBox_Symbol.Text = "符号";
+            this.checkBox_Symbol.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 226);
+            this.ClientSize = new System.Drawing.Size(297, 466);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_class);
             this.Controls.Add(this.textBox_end);
             this.Controls.Add(this.textBox_start);
@@ -191,6 +298,8 @@
             this.Controls.Add(this.textBox_email_file);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,6 +321,15 @@
         private System.Windows.Forms.TextBox textBox_end;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_class;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox checkBox_number;
+        private System.Windows.Forms.CheckBox checkBox_letter;
+        private System.Windows.Forms.TextBox textBox_rand_count;
+        private System.Windows.Forms.TextBox textBox_fixed_password;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox checkBox_Symbol;
     }
 }
 

@@ -254,5 +254,48 @@ namespace 文本组装
                 sw.WriteLine(str);
             }
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var fixedPassword = this.textBox_fixed_password.Text;
+            var randomCount = Int32.Parse(this.textBox_rand_count.Text);
+            var randCount = Int32.Parse(this.textBox_rand_count.Text);
+            var numberCheck = this.checkBox_number.Checked;
+            var letterCheck = this.checkBox_letter.Checked;
+            var symboCheck = this.checkBox_Symbol.Checked;
+            if (numberCheck)
+            {
+                int lenght = 1;
+                for(int i= 0;i< randCount; i++)
+                {
+                    lenght *= 10;
+                }
+                for(int i=0;i< lenght; i++)
+                {
+                    string password = fixedPassword + i.ToString();
+                    SaveData(password, "生成的密码.txt");
+                }
+            }
+            if (letterCheck)
+            {
+
+            }
+            if (symboCheck)
+            {
+
+            }
+        }
+        //生成数字
+        public int GetNumber()
+        {
+            Random r = new Random();
+            var result= r.Next(0,9);
+            return result;
+        }
     }
 }
