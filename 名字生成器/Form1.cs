@@ -79,6 +79,15 @@ namespace 名字生成器
             }
             mutex.ReleaseMutex();
         }
+        public void SaveData3(StringBuilder sb)
+        {
+            mutex.WaitOne();
+            using (StreamWriter sw = new StreamWriter(CheckFile("拼音名字.txt"), true, Encoding.Default))
+            {
+                sw.WriteLine(sb.ToString());
+            }
+            mutex.ReleaseMutex();
+        }
         //文件读取
         public List<char> GetFile(string filePath)
         {
@@ -111,6 +120,24 @@ namespace 名字生成器
                 sb.Append(c);
             }
             SaveData2(sb);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var userNameFile = this.textBox_userName.Text;
+            var userNames = GetUserName(userNameFile);
+            StringBuilder sb = new StringBuilder();
+            foreach(string userName in userNames)
+            {
+                string _str = ChineseToSpell.ConvertToAllSpell(userName);
+               sb.AppendLine(_str);
+            }
+            SaveData3(sb);
+        }
+
+        public List<string> GetUserName(string str)
+        {
+            return File.ReadAllLines(str).ToList();
         }
     }
 
