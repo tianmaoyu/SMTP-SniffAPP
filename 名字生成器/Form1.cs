@@ -70,6 +70,15 @@ namespace 名字生成器
             }
             mutex.ReleaseMutex();
         }
+        public void SaveData2(StringBuilder sb)
+        {
+            mutex.WaitOne();
+            using (StreamWriter sw = new StreamWriter(CheckFile("去重复的字.txt"), true, Encoding.Default))
+            {
+                sw.WriteLine(sb.ToString());
+            }
+            mutex.ReleaseMutex();
+        }
         //文件读取
         public List<char> GetFile(string filePath)
         {
@@ -91,13 +100,25 @@ namespace 名字生成器
         {
             return ChineseToSpell.ConvertToAllSpell(c.ToString());
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var wordFile = this.textBox_reaplec.Text;
+            var words = GetFile(wordFile).Distinct().ToList(); ;
+            StringBuilder sb = new StringBuilder();
+            foreach(char c in words)
+            {
+                sb.Append(c);
+            }
+            SaveData2(sb);
+        }
     }
-   
-        /// <summary>
-        /// 实现汉字转化为拼音
-        /// <remarks>实现的原理就是先将汉字转化成为内码，然后通过内码和拼音的对照来查找</remarks>
-        /// </summary>
-        public class ChineseToSpell
+
+    /// <summary>
+    /// 实现汉字转化为拼音
+    /// <remarks>实现的原理就是先将汉字转化成为内码，然后通过内码和拼音的对照来查找</remarks>
+    /// </summary>
+    public class ChineseToSpell
         {
             private static Regex MyRegex = new Regex("^[一-龥]$"); //汉字的正则表达式.eg: if(MyRegex.IsMatch(chrstr.ToString()))
             private static int[] pyvalue = new int[]{-20319,-20317,-20304,-20295,-20292,-20283,-20265,-20257,-20242,-20230,-20051,-20036,-20032,-20026,

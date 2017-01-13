@@ -35,6 +35,10 @@
             this.checkBox_two = new System.Windows.Forms.CheckBox();
             this.checkBox_three = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBox_reaplec = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -102,11 +106,41 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // textBox_reaplec
+            // 
+            this.textBox_reaplec.Location = new System.Drawing.Point(65, 20);
+            this.textBox_reaplec.Name = "textBox_reaplec";
+            this.textBox_reaplec.Size = new System.Drawing.Size(151, 21);
+            this.textBox_reaplec.TabIndex = 4;
+            this.textBox_reaplec.Text = "字.txt";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.textBox_reaplec);
+            this.groupBox1.Location = new System.Drawing.Point(23, 191);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(222, 94);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "去重复";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(139, 48);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "确定";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(268, 223);
+            this.ClientSize = new System.Drawing.Size(268, 319);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox_three);
             this.Controls.Add(this.checkBox_two);
@@ -116,6 +150,8 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,6 +166,9 @@
         private System.Windows.Forms.CheckBox checkBox_two;
         private System.Windows.Forms.CheckBox checkBox_three;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox_reaplec;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button2;
     }
 }
 
