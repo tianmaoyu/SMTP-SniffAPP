@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "删除邮件", "删除邮�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "网页登录-网易", "网页登录-网易\网页登录-网易.csproj", "{BDC46B78-59F8-4410-9420-0FFFF22E09CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "名字生成器", "名字生成器\名字生成器.csproj", "{386DFDD4-3135-472F-95A0-C025AAED00CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +225,18 @@ Global
 		{BDC46B78-59F8-4410-9420-0FFFF22E09CF}.Release|x64.Build.0 = Release|Any CPU
 		{BDC46B78-59F8-4410-9420-0FFFF22E09CF}.Release|x86.ActiveCfg = Release|Any CPU
 		{BDC46B78-59F8-4410-9420-0FFFF22E09CF}.Release|x86.Build.0 = Release|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Debug|x64.Build.0 = Debug|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Debug|x86.Build.0 = Debug|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|x64.ActiveCfg = Release|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|x64.Build.0 = Release|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|x86.ActiveCfg = Release|Any CPU
+		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
