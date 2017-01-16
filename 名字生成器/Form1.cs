@@ -91,7 +91,7 @@ namespace 名字生成器
         //文件读取
         public List<char> GetFile(string filePath)
         {
-            var list = File.ReadAllText(filePath,Encoding.Default).Replace(" ","").Replace("\r","").Replace("\n","").ToList();
+            var list = File.ReadAllText(filePath,Encoding.UTF8).Replace(" ","").Replace("\r","").Replace("\n","").ToList();
             return list;
         }
         public string CheckFile(string filePath)
@@ -137,7 +137,7 @@ namespace 名字生成器
 
         public List<string> GetUserName(string str)
         {
-            return File.ReadAllLines(str).ToList();
+            return File.ReadAllLines(str,Encoding.UTF8).ToList();
         }
     }
 
