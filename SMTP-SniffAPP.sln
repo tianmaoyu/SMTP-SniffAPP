@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "网页登录-网易", "网�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "名字生成器", "名字生成器\名字生成器.csproj", "{386DFDD4-3135-472F-95A0-C025AAED00CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "密码调换", "密码调换\密码调换.csproj", "{67413F07-E083-490B-BACC-33CB7F9CE379}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,18 @@ Global
 		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|x64.Build.0 = Release|Any CPU
 		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|x86.ActiveCfg = Release|Any CPU
 		{386DFDD4-3135-472F-95A0-C025AAED00CE}.Release|x86.Build.0 = Release|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Debug|x64.Build.0 = Debug|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Debug|x86.Build.0 = Debug|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|x64.ActiveCfg = Release|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|x64.Build.0 = Release|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|x86.ActiveCfg = Release|Any CPU
+		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
