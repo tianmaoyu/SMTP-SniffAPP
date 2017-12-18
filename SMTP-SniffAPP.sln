@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTP-SniffAPP", "SMTP-SniffAPP\SMTP-SniffAPP.csproj", "{A60A0378-1106-465C-BF25-448A25ABFCD0}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "名字生成器", "名字生成器\名字生成器.csproj", "{386DFDD4-3135-472F-95A0-C025AAED00CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "密码调换", "密码调换\密码调换.csproj", "{67413F07-E083-490B-BACC-33CB7F9CE379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchRepleace", "SearchRepleace\SearchRepleace.csproj", "{E5658F0D-E8A6-4AE3-9946-3668253BF82E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -251,8 +253,23 @@ Global
 		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|x64.Build.0 = Release|Any CPU
 		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|x86.ActiveCfg = Release|Any CPU
 		{67413F07-E083-490B-BACC-33CB7F9CE379}.Release|x86.Build.0 = Release|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Debug|x64.Build.0 = Debug|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Debug|x86.Build.0 = Debug|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Release|x64.ActiveCfg = Release|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Release|x64.Build.0 = Release|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Release|x86.ActiveCfg = Release|Any CPU
+		{E5658F0D-E8A6-4AE3-9946-3668253BF82E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31AC0EC7-2C35-48D3-84D9-6C332D22C743}
 	EndGlobalSection
 EndGlobal
