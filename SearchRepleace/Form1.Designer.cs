@@ -1,6 +1,6 @@
 ﻿namespace SearchRepleace
 {
-    partial class Form1
+    partial class demo
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(demo));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.button_Replece = new System.Windows.Forms.Button();
@@ -58,6 +59,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.button_Replece);
             this.panel1.Controls.Add(this.btn_Reacher);
@@ -114,12 +116,10 @@
             // 
             // text_fileNames
             // 
-            this.text_fileNames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.text_fileNames.Location = new System.Drawing.Point(9, 32);
+            this.text_fileNames.Location = new System.Drawing.Point(9, 23);
             this.text_fileNames.Multiline = true;
             this.text_fileNames.Name = "text_fileNames";
-            this.text_fileNames.Size = new System.Drawing.Size(517, 100);
+            this.text_fileNames.Size = new System.Drawing.Size(517, 119);
             this.text_fileNames.TabIndex = 1;
             // 
             // tabControl
@@ -131,7 +131,7 @@
             this.tabControl.Location = new System.Drawing.Point(8, 148);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(521, 227);
+            this.tabControl.Size = new System.Drawing.Size(521, 220);
             this.tabControl.TabIndex = 0;
             // 
             // tab_Family
@@ -141,13 +141,14 @@
             this.tab_Family.Location = new System.Drawing.Point(4, 22);
             this.tab_Family.Name = "tab_Family";
             this.tab_Family.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Family.Size = new System.Drawing.Size(513, 201);
+            this.tab_Family.Size = new System.Drawing.Size(513, 194);
             this.tab_Family.TabIndex = 0;
             this.tab_Family.Text = "文字";
             this.tab_Family.UseVisualStyleBackColor = true;
             // 
             // dataGridView_Fmaily
             // 
+            this.dataGridView_Fmaily.AllowUserToAddRows = false;
             this.dataGridView_Fmaily.AllowUserToOrderColumns = true;
             this.dataGridView_Fmaily.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView_Fmaily.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -160,9 +161,8 @@
             this.dataGridView_Fmaily.Location = new System.Drawing.Point(3, 3);
             this.dataGridView_Fmaily.Name = "dataGridView_Fmaily";
             this.dataGridView_Fmaily.RowTemplate.Height = 23;
-            this.dataGridView_Fmaily.Size = new System.Drawing.Size(507, 195);
+            this.dataGridView_Fmaily.Size = new System.Drawing.Size(507, 188);
             this.dataGridView_Fmaily.TabIndex = 0;
-            this.dataGridView_Fmaily.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Fmaily_CellContentClick);
             // 
             // Original
             // 
@@ -198,25 +198,25 @@
             this.tab_Mtype.Location = new System.Drawing.Point(4, 22);
             this.tab_Mtype.Name = "tab_Mtype";
             this.tab_Mtype.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Mtype.Size = new System.Drawing.Size(513, 166);
+            this.tab_Mtype.Size = new System.Drawing.Size(513, 194);
             this.tab_Mtype.TabIndex = 1;
             this.tab_Mtype.Text = "注音";
             this.tab_Mtype.UseVisualStyleBackColor = true;
             // 
             // dataGridView_Mtype
             // 
-            this.dataGridView_Mtype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView_Mtype.AllowUserToAddRows = false;
             this.dataGridView_Mtype.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView_Mtype.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Mtype.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dataGridView_Mtype.Location = new System.Drawing.Point(4, 3);
+            this.dataGridView_Mtype.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Mtype.Location = new System.Drawing.Point(3, 3);
             this.dataGridView_Mtype.Name = "dataGridView_Mtype";
             this.dataGridView_Mtype.RowTemplate.Height = 23;
-            this.dataGridView_Mtype.Size = new System.Drawing.Size(408, 157);
+            this.dataGridView_Mtype.Size = new System.Drawing.Size(507, 188);
             this.dataGridView_Mtype.TabIndex = 0;
             // 
             // Column2
@@ -239,15 +239,18 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
-            // Form1
+            // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(529, 400);
             this.Controls.Add(this.panel1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "demo";
+            this.Text = "demo";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabControl.ResumeLayout(false);
