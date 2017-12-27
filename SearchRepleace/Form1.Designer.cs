@@ -38,16 +38,17 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tab_Family = new System.Windows.Forms.TabPage();
             this.dataGridView_Fmaily = new System.Windows.Forms.DataGridView();
-            this.Original = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IScOM = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.NewFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_Mtype = new System.Windows.Forms.TabPage();
             this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.OldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsCombination = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.NewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
@@ -69,7 +70,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(529, 400);
+            this.panel1.Size = new System.Drawing.Size(590, 393);
             this.panel1.TabIndex = 0;
             // 
             // label1
@@ -85,7 +86,7 @@
             // button_Replece
             // 
             this.button_Replece.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Replece.Location = new System.Drawing.Point(347, 374);
+            this.button_Replece.Location = new System.Drawing.Point(408, 368);
             this.button_Replece.Name = "button_Replece";
             this.button_Replece.Size = new System.Drawing.Size(75, 23);
             this.button_Replece.TabIndex = 4;
@@ -96,7 +97,7 @@
             // btn_Reacher
             // 
             this.btn_Reacher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Reacher.Location = new System.Drawing.Point(266, 374);
+            this.btn_Reacher.Location = new System.Drawing.Point(327, 367);
             this.btn_Reacher.Name = "btn_Reacher";
             this.btn_Reacher.Size = new System.Drawing.Size(75, 23);
             this.btn_Reacher.TabIndex = 3;
@@ -119,7 +120,7 @@
             this.text_fileNames.Location = new System.Drawing.Point(9, 23);
             this.text_fileNames.Multiline = true;
             this.text_fileNames.Name = "text_fileNames";
-            this.text_fileNames.Size = new System.Drawing.Size(517, 119);
+            this.text_fileNames.Size = new System.Drawing.Size(474, 97);
             this.text_fileNames.TabIndex = 1;
             // 
             // tabControl
@@ -131,7 +132,7 @@
             this.tabControl.Location = new System.Drawing.Point(8, 148);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(521, 220);
+            this.tabControl.Size = new System.Drawing.Size(582, 220);
             this.tabControl.TabIndex = 0;
             // 
             // tab_Family
@@ -141,7 +142,7 @@
             this.tab_Family.Location = new System.Drawing.Point(4, 22);
             this.tab_Family.Name = "tab_Family";
             this.tab_Family.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Family.Size = new System.Drawing.Size(513, 194);
+            this.tab_Family.Size = new System.Drawing.Size(574, 194);
             this.tab_Family.TabIndex = 0;
             this.tab_Family.Text = "文字";
             this.tab_Family.UseVisualStyleBackColor = true;
@@ -153,43 +154,18 @@
             this.dataGridView_Fmaily.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView_Fmaily.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Fmaily.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Original,
-            this.Count,
-            this.IScOM,
-            this.NewFamily});
+            this.OldText,
+            this.Id,
+            this.OldValue,
+            this.IsCombination,
+            this.NewValue});
             this.dataGridView_Fmaily.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_Fmaily.Location = new System.Drawing.Point(3, 3);
             this.dataGridView_Fmaily.Name = "dataGridView_Fmaily";
+            this.dataGridView_Fmaily.RowHeadersVisible = false;
             this.dataGridView_Fmaily.RowTemplate.Height = 23;
-            this.dataGridView_Fmaily.Size = new System.Drawing.Size(507, 188);
+            this.dataGridView_Fmaily.Size = new System.Drawing.Size(568, 188);
             this.dataGridView_Fmaily.TabIndex = 0;
-            // 
-            // Original
-            // 
-            this.Original.FillWeight = 105.8027F;
-            this.Original.HeaderText = "原始字体";
-            this.Original.Name = "Original";
-            // 
-            // Count
-            // 
-            this.Count.FillWeight = 79.18781F;
-            this.Count.HeaderText = "是否异常";
-            this.Count.Name = "Count";
-            // 
-            // IScOM
-            // 
-            this.IScOM.FillWeight = 109.2068F;
-            this.IScOM.HeaderText = "添加组合字体";
-            this.IScOM.MinimumWidth = 7;
-            this.IScOM.Name = "IScOM";
-            this.IScOM.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.IScOM.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // NewFamily
-            // 
-            this.NewFamily.FillWeight = 105.8027F;
-            this.NewFamily.HeaderText = "替换后字体";
-            this.NewFamily.Name = "NewFamily";
             // 
             // tab_Mtype
             // 
@@ -239,13 +215,49 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // OldText
+            // 
+            this.OldText.HeaderText = "OldText";
+            this.OldText.Name = "OldText";
+            this.OldText.Visible = false;
+            // 
+            // Id
+            // 
+            this.Id.FillWeight = 40F;
+            this.Id.HeaderText = "编号";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // OldValue
+            // 
+            this.OldValue.FillWeight = 110.6032F;
+            this.OldValue.HeaderText = "老字体";
+            this.OldValue.Name = "OldValue";
+            this.OldValue.ReadOnly = true;
+            // 
+            // IsCombination
+            // 
+            this.IsCombination.FillWeight = 114.1617F;
+            this.IsCombination.HeaderText = "是否添加组合字体";
+            this.IsCombination.MinimumWidth = 7;
+            this.IsCombination.Name = "IsCombination";
+            this.IsCombination.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.IsCombination.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // NewValue
+            // 
+            this.NewValue.FillWeight = 110.6032F;
+            this.NewValue.HeaderText = "新字体";
+            this.NewValue.Name = "NewValue";
+            // 
             // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(529, 400);
+            this.ClientSize = new System.Drawing.Size(590, 393);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -280,10 +292,11 @@
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button btn_Reacher;
         private System.Windows.Forms.Button button_Replece;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Original;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn IScOM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NewFamily;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OldValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsCombination;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NewValue;
     }
 }
 

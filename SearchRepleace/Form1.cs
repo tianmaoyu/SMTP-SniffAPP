@@ -12,6 +12,8 @@ using System.Windows.Forms;
 
 namespace SearchRepleace
 {
+
+
     public partial class demo : Form
     {
         public demo()
@@ -270,7 +272,9 @@ namespace SearchRepleace
             }
             if (currentTabName.Equals(this.tab_Family.Name))
             {
-                this.FillDataView(fileNames[0]);
+                var family = new Family(this.dataGridView_Fmaily);
+                family.WriteDataView(fileNames[0]);
+                //this.FillDataView(fileNames[0]);
             }
 
 
@@ -291,8 +295,10 @@ namespace SearchRepleace
             }
             if (currentTabName.Equals(this.tab_Family.Name))
             {
-                this.RepleaceFamily();
-                MessageBox.Show("替换成功！");
+                var family = new Family(this.dataGridView_Fmaily);
+                family.ReadDataView();
+                //this.RepleaceFamily();
+                //MessageBox.Show("替换成功！");
             }
 
         }
