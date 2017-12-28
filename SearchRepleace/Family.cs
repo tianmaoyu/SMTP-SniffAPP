@@ -111,21 +111,42 @@ namespace SearchRepleace
             this.ReplaceCombination(_familyEntitys);
         }
 
-
+        /// <summary>
+        /// 直接替换
+        /// </summary>
+        /// <param name="entitys"></param>
         private void ReplaceNoCombination(List<FamilyEntity> entitys)
         {
-            var _list = entitys.Where(i => !i.IsCombination).ToList();
+            var _list = entitys.ToList();
             if (_list.Any())
             {
                 foreach (var entity in _list)
                 {
-                    if (string.IsNullOrEmpty(entity.NewValue)) continue;
                     var oldText = entity.OldText;
-                    var newText = $"<inlFFamily `{entity.NewValue}'>";
+                    var newText = string.Empty;
+                    if (entity.IsCombination)
+                    {
+                        if (string.IsNullOrEmpty(entity.NewValue))
+                        {
+                            newText = $"<inlFFamily `{entity.OldValue}+'>";
+                        }
+                        else
+                        {
+                            newText = $"<inlFFamily `{entity.OldValue}_{entity.NewValue}'>";
+                        }
+                    }
+                    else{
+                        if (string.IsNullOrEmpty(entity.NewValue)) continue;
+                        newText = $"<inlFFamily `{entity.NewValue}'>";
+                    }
                     FileHelper.Replace(Family.fileName, oldText, newText);
                 }
             }
         }
+        /// <summary>
+        /// 组合字体替换
+        /// </summary>
+        /// <param name="entitys"></param>
         private void ReplaceCombination(List<FamilyEntity> entitys)
         {
             var _list = entitys.Where(i => i.IsCombination).ToList();
@@ -147,7 +168,7 @@ namespace SearchRepleace
                         var newText = $@"<inlCombinedFontCatalog
 <inlCombinedFontDefn 
 <inlCombinedFontName `{entity.OldValue}+'>
-<inlCombinedFontBaseFamily `{entity.OldValue} Unicode MS'>
+<inlCombinedFontBaseFamily `Arial Unicode MS'>
 <inlCombinedFontAllowBaseFamilyBoldedAndObliqued Yes>
 <inlCombinedFontWesternFamily `{entity.OldValue}'>
 <inlCombinedFontWesternSize  100.0%>
@@ -162,7 +183,7 @@ namespace SearchRepleace
                         var newText = $@"<inlCombinedFontCatalog
 <inlCombinedFontDefn 
 <inlCombinedFontName `{entity.OldValue}_{entity.NewValue}'>
-<inlCombinedFontBaseFamily `{entity.OldValue}'>
+<inlCombinedFontBaseFamily `{entity.NewValue}'>
 <inlCombinedFontAllowBaseFamilyBoldedAndObliqued Yes>
 <inlCombinedFontWesternFamily `{entity.OldValue}'>
 <inlCombinedFontWesternSize  100.0%>
@@ -180,9 +201,10 @@ namespace SearchRepleace
         }
         private void AddFontCatalog()
         {
-            var newText = @"<inlCombinedFontCatalog
-> # end of CombinedFontCatalog
-> # end of ColorCatalog";
+            var newText = @"> # end of ColorCatalog
+<inlCombinedFontCatalog
+> # end of CombinedFontCatalog";
+
             var oldText = @"> # end of ColorCatalog";
             FileHelper.Replace(Family.fileName, oldText, newText);
         }
