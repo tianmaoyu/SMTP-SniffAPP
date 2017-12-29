@@ -18,7 +18,9 @@ namespace SearchRepleace
         //MType=2 表示注音
         private string partternMType2 = @"<inlMType 2>";
 
-        private string partternValue = @"(?<=<inlMText `).+(?='>)";
+        private string partternValue = @"(?<=<inlMText `|<MText `).+(?='>)";
+        //特殊的字符
+        private List<string> spcialStr = new List<string>() { @"\[", @"\]", @"\>" };
 
         private static string fileName;
 
@@ -57,6 +59,8 @@ namespace SearchRepleace
                 var entity = new MarkerSplitEntity();
                 entity.Id = i;
                 entity.OldText = keyValue.Key;
+                entity.OldValue = keyValue.Value;
+
                 familyEntitys.Add(entity);
                 i++;
             }
@@ -80,8 +84,13 @@ namespace SearchRepleace
                 var OldTextCell = new DataGridViewTextBoxCell();
                 OldTextCell.Value = entity.OldText;
 
-                row.Cells.Add(OldTextCell);
+                var valueCell = new DataGridViewTextBoxCell();
+                valueCell.Value = entity.OldValue;
+
                 row.Cells.Add(idCell);
+                row.Cells.Add(OldTextCell);
+                row.Cells.Add(valueCell);
+
                 this.dataGridView.Rows.Add(row);
             }
 
@@ -92,24 +101,66 @@ namespace SearchRepleace
             var _familyEntitys = new List<MarkerSplitEntity>();
             foreach (DataGridViewRow row in this.dataGridView.Rows)
             {
-                var familyEntity = new MarkerSplitEntity();
-                familyEntity.OldText = row.Cells["OldText"].Value.ToString();
-                familyEntity.Id = (int)row.Cells["Id"].Value;
-                _familyEntitys.Add(familyEntity);
+                var splitEntity = new MarkerSplitEntity();
+                splitEntity.OldText = row.Cells["SplitOldText"].Value.ToString()+"\r";//加一个回车
+                splitEntity.OldValue = row.Cells["SplitValue"].Value.ToString();
+                if (splitEntity.OldValue.Contains(@"\]") && splitEntity.OldValue.Contains(@";"))
+                {
+                    splitEntity.IsSpecial = true;
+                }
+                _familyEntitys.Add(splitEntity);
             }
-            this.Replace(_familyEntitys);
-            
+            this.ReplaceCommon(_familyEntitys);
+            this.ReplaceSpecial(_familyEntitys);
         }
-        private void Replace(List<MarkerSplitEntity> list)
+        //普通替换
+        private void ReplaceCommon(List<MarkerSplitEntity> entities)
         {
-
+            var _entities = entities.Where(i => !i.IsSpecial).ToList();
+            foreach (var entity in _entities)
+            {
+                if (!entity.OldValue.Contains(";")) continue;
+                var valueList = entity.OldValue.Split(';').ToList();
+                var oldText = entity.OldText;
+                var newText = string.Empty;
+                foreach (var value in valueList)
+                {
+                    newText += entity.OldText.Replace(entity.OldValue, value.TrimStart().TrimEnd());
+                }
+                FileHelper.Replace(MarkerSplit.fileName, oldText, newText);
+            }
         }
-
+        //特殊替换
+        private void ReplaceSpecial(List<MarkerSplitEntity> entities)
+        {
+            var _entities = entities.Where(i => i.IsSpecial).ToList();
+            foreach (var entity in _entities)
+            {
+                var oldValue = entity.OldValue;
+                if (oldValue.Contains(@"\["))
+                    oldValue = oldValue.Replace(@"\[", @"\\[");
+                if (oldValue.Contains(@"\]"))
+                    oldValue = oldValue.Replace(@"\]", @"\\]");
+                if (oldValue.Contains(@"\<"))
+                    oldValue = oldValue.Replace(@"\<", @"\\<");
+                if (oldValue.Contains(@"\>"))
+                    oldValue = oldValue.Replace(@"\>", @"\\>");
+                var valueList = oldValue.Split(';').ToList();
+                var oldText = entity.OldText;
+                var newText = string.Empty;
+                foreach (var value in valueList)
+                {
+                    newText += entity.OldText.Replace(entity.OldValue, value.TrimStart().TrimEnd());
+                }
+                FileHelper.Replace(MarkerSplit.fileName, oldText, newText);
+            }
+        }
     }
     public class MarkerSplitEntity
     {
         public int Id { get; set; }
+        public bool IsSpecial { set; get; }
         public string OldText { set; get; }
-        public string NewText { set; get; }
+        public string OldValue { set; get; }
     }
 }

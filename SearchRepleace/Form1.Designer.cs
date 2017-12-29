@@ -38,17 +38,22 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tab_Family = new System.Windows.Forms.TabPage();
             this.dataGridView_Fmaily = new System.Windows.Forms.DataGridView();
+            this.OldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsCombination = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.NewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_Mtype = new System.Windows.Forms.TabPage();
             this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.OldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsCombination = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.NewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tab_Split = new System.Windows.Forms.TabPage();
+            this.dataGridView_Split = new System.Windows.Forms.DataGridView();
+            this.SplitId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SplitOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SplitValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
@@ -56,6 +61,8 @@
             this.tab_Mtype.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            this.tab_Split.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -90,7 +97,7 @@
             this.button_Replece.Name = "button_Replece";
             this.button_Replece.Size = new System.Drawing.Size(75, 23);
             this.button_Replece.TabIndex = 4;
-            this.button_Replece.Text = "替换";
+            this.button_Replece.Text = "替换/拆分";
             this.button_Replece.UseVisualStyleBackColor = true;
             this.button_Replece.Click += new System.EventHandler(this.button_Replece_Click);
             // 
@@ -120,19 +127,18 @@
             this.text_fileNames.Location = new System.Drawing.Point(9, 23);
             this.text_fileNames.Multiline = true;
             this.text_fileNames.Name = "text_fileNames";
-            this.text_fileNames.Size = new System.Drawing.Size(474, 97);
+            this.text_fileNames.Size = new System.Drawing.Size(574, 75);
             this.text_fileNames.TabIndex = 1;
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tab_Family);
+            this.tabControl.Controls.Add(this.tab_Split);
             this.tabControl.Controls.Add(this.tab_Mtype);
-            this.tabControl.Location = new System.Drawing.Point(8, 148);
+            this.tabControl.Location = new System.Drawing.Point(8, 104);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(582, 220);
+            this.tabControl.Size = new System.Drawing.Size(582, 264);
             this.tabControl.TabIndex = 0;
             // 
             // tab_Family
@@ -166,54 +172,6 @@
             this.dataGridView_Fmaily.RowTemplate.Height = 23;
             this.dataGridView_Fmaily.Size = new System.Drawing.Size(568, 188);
             this.dataGridView_Fmaily.TabIndex = 0;
-            // 
-            // tab_Mtype
-            // 
-            this.tab_Mtype.AutoScroll = true;
-            this.tab_Mtype.Controls.Add(this.dataGridView_Mtype);
-            this.tab_Mtype.Location = new System.Drawing.Point(4, 22);
-            this.tab_Mtype.Name = "tab_Mtype";
-            this.tab_Mtype.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Mtype.Size = new System.Drawing.Size(513, 194);
-            this.tab_Mtype.TabIndex = 1;
-            this.tab_Mtype.Text = "注音";
-            this.tab_Mtype.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView_Mtype
-            // 
-            this.dataGridView_Mtype.AllowUserToAddRows = false;
-            this.dataGridView_Mtype.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView_Mtype.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Mtype.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column2,
-            this.Column3,
-            this.Column4});
-            this.dataGridView_Mtype.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView_Mtype.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView_Mtype.Name = "dataGridView_Mtype";
-            this.dataGridView_Mtype.RowTemplate.Height = 23;
-            this.dataGridView_Mtype.Size = new System.Drawing.Size(507, 188);
-            this.dataGridView_Mtype.TabIndex = 0;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "原始读音";
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "目标读音";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "替换后读音";
-            this.Column4.Name = "Column4";
-            // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
             // 
             // OldText
             // 
@@ -251,6 +209,102 @@
             this.NewValue.HeaderText = "新字体";
             this.NewValue.Name = "NewValue";
             // 
+            // tab_Mtype
+            // 
+            this.tab_Mtype.AutoScroll = true;
+            this.tab_Mtype.Controls.Add(this.dataGridView_Mtype);
+            this.tab_Mtype.Location = new System.Drawing.Point(4, 22);
+            this.tab_Mtype.Name = "tab_Mtype";
+            this.tab_Mtype.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_Mtype.Size = new System.Drawing.Size(574, 194);
+            this.tab_Mtype.TabIndex = 1;
+            this.tab_Mtype.Text = "注音";
+            this.tab_Mtype.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView_Mtype
+            // 
+            this.dataGridView_Mtype.AllowUserToAddRows = false;
+            this.dataGridView_Mtype.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_Mtype.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Mtype.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
+            this.Column3,
+            this.Column4});
+            this.dataGridView_Mtype.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Mtype.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_Mtype.Name = "dataGridView_Mtype";
+            this.dataGridView_Mtype.RowTemplate.Height = 23;
+            this.dataGridView_Mtype.Size = new System.Drawing.Size(568, 188);
+            this.dataGridView_Mtype.TabIndex = 0;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "原始读音";
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "目标读音";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "替换后读音";
+            this.Column4.Name = "Column4";
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // tab_Split
+            // 
+            this.tab_Split.Controls.Add(this.dataGridView_Split);
+            this.tab_Split.Location = new System.Drawing.Point(4, 22);
+            this.tab_Split.Name = "tab_Split";
+            this.tab_Split.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_Split.Size = new System.Drawing.Size(574, 238);
+            this.tab_Split.TabIndex = 2;
+            this.tab_Split.Text = "拆分";
+            this.tab_Split.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView_Split
+            // 
+            this.dataGridView_Split.AllowUserToAddRows = false;
+            this.dataGridView_Split.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_Split.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Split.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SplitId,
+            this.SplitOldText,
+            this.SplitValue});
+            this.dataGridView_Split.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Split.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_Split.Name = "dataGridView_Split";
+            this.dataGridView_Split.RowHeadersVisible = false;
+            this.dataGridView_Split.RowTemplate.Height = 23;
+            this.dataGridView_Split.Size = new System.Drawing.Size(568, 232);
+            this.dataGridView_Split.TabIndex = 0;
+            // 
+            // SplitId
+            // 
+            this.SplitId.FillWeight = 15F;
+            this.SplitId.HeaderText = "序号";
+            this.SplitId.Name = "SplitId";
+            this.SplitId.ReadOnly = true;
+            // 
+            // SplitOldText
+            // 
+            this.SplitOldText.HeaderText = "Column1";
+            this.SplitOldText.Name = "SplitOldText";
+            this.SplitOldText.ReadOnly = true;
+            this.SplitOldText.Visible = false;
+            // 
+            // SplitValue
+            // 
+            this.SplitValue.HeaderText = "读音内容";
+            this.SplitValue.Name = "SplitValue";
+            this.SplitValue.ReadOnly = true;
+            // 
             // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -271,6 +325,8 @@
             this.tab_Mtype.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            this.tab_Split.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -297,6 +353,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OldValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsCombination;
         private System.Windows.Forms.DataGridViewTextBoxColumn NewValue;
+        private System.Windows.Forms.TabPage tab_Split;
+        private System.Windows.Forms.DataGridView dataGridView_Split;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SplitId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SplitOldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SplitValue;
     }
 }
 

@@ -274,10 +274,12 @@ namespace SearchRepleace
             {
                 var family = new Family(this.dataGridView_Fmaily);
                 family.WriteDataView(fileNames[0]);
-                //this.FillDataView(fileNames[0]);
             }
-
-
+            if (currentTabName.Equals(this.tab_Split.Name))
+            {
+                var split = new MarkerSplit(this.dataGridView_Split);
+                split.WriteDataView(fileNames[0]);
+            }
         }
 
         private void button_Replece_Click(object sender, EventArgs e)
@@ -297,12 +299,15 @@ namespace SearchRepleace
             {
                 var family = new Family(this.dataGridView_Fmaily);
                 family.ReadDataView();
-                //this.RepleaceFamily();
-                //MessageBox.Show("替换成功！");
+            }
+            if (currentTabName.Equals(this.tab_Split.Name))
+            {
+                var split = new MarkerSplit(this.dataGridView_Split);
+                split.ReadDataView();
             }
 
         }
 
-
+       
     }
 }
