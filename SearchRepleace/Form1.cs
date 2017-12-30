@@ -280,6 +280,11 @@ namespace SearchRepleace
                 var split = new MarkerSplit(this.dataGridView_Split);
                 split.WriteDataView(fileNames[0]);
             }
+            if (currentTabName.Equals(this.tab_Mtype.Name))
+            {
+                var markerAdd = new MarkerAdd(this.dataGridView_Mtype);
+                markerAdd.WriteDataView(fileNames[0]);
+            }
         }
 
         private void button_Replece_Click(object sender, EventArgs e)
@@ -305,7 +310,11 @@ namespace SearchRepleace
                 var split = new MarkerSplit(this.dataGridView_Split);
                 split.ReadDataView();
             }
-
+            if (currentTabName.Equals(this.tab_Mtype.Name))
+            {
+                var markerAdd = new MarkerAdd(this.dataGridView_Mtype);
+                markerAdd.ReadDataView();
+            }
         }
 
        

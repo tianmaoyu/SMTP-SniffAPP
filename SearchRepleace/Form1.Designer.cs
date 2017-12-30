@@ -43,26 +43,27 @@
             this.OldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsCombination = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.NewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tab_Mtype = new System.Windows.Forms.TabPage();
-            this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.tab_Split = new System.Windows.Forms.TabPage();
             this.dataGridView_Split = new System.Windows.Forms.DataGridView();
             this.SplitId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SplitOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SplitValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tab_Mtype = new System.Windows.Forms.TabPage();
+            this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Fmaily)).BeginInit();
+            this.tab_Split.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).BeginInit();
             this.tab_Mtype.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-            this.tab_Split.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -77,7 +78,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(590, 393);
+            this.panel1.Size = new System.Drawing.Size(758, 409);
             this.panel1.TabIndex = 0;
             // 
             // label1
@@ -93,7 +94,7 @@
             // button_Replece
             // 
             this.button_Replece.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Replece.Location = new System.Drawing.Point(408, 368);
+            this.button_Replece.Location = new System.Drawing.Point(576, 368);
             this.button_Replece.Name = "button_Replece";
             this.button_Replece.Size = new System.Drawing.Size(75, 23);
             this.button_Replece.TabIndex = 4;
@@ -104,7 +105,7 @@
             // btn_Reacher
             // 
             this.btn_Reacher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Reacher.Location = new System.Drawing.Point(327, 367);
+            this.btn_Reacher.Location = new System.Drawing.Point(495, 367);
             this.btn_Reacher.Name = "btn_Reacher";
             this.btn_Reacher.Size = new System.Drawing.Size(75, 23);
             this.btn_Reacher.TabIndex = 3;
@@ -132,13 +133,15 @@
             // 
             // tabControl
             // 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tab_Family);
             this.tabControl.Controls.Add(this.tab_Split);
             this.tabControl.Controls.Add(this.tab_Mtype);
             this.tabControl.Location = new System.Drawing.Point(8, 104);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(582, 264);
+            this.tabControl.Size = new System.Drawing.Size(747, 258);
             this.tabControl.TabIndex = 0;
             // 
             // tab_Family
@@ -148,7 +151,7 @@
             this.tab_Family.Location = new System.Drawing.Point(4, 22);
             this.tab_Family.Name = "tab_Family";
             this.tab_Family.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Family.Size = new System.Drawing.Size(574, 194);
+            this.tab_Family.Size = new System.Drawing.Size(574, 238);
             this.tab_Family.TabIndex = 0;
             this.tab_Family.Text = "文字";
             this.tab_Family.UseVisualStyleBackColor = true;
@@ -170,7 +173,7 @@
             this.dataGridView_Fmaily.Name = "dataGridView_Fmaily";
             this.dataGridView_Fmaily.RowHeadersVisible = false;
             this.dataGridView_Fmaily.RowTemplate.Height = 23;
-            this.dataGridView_Fmaily.Size = new System.Drawing.Size(568, 188);
+            this.dataGridView_Fmaily.Size = new System.Drawing.Size(568, 232);
             this.dataGridView_Fmaily.TabIndex = 0;
             // 
             // OldText
@@ -208,54 +211,6 @@
             this.NewValue.FillWeight = 110.6032F;
             this.NewValue.HeaderText = "新字体";
             this.NewValue.Name = "NewValue";
-            // 
-            // tab_Mtype
-            // 
-            this.tab_Mtype.AutoScroll = true;
-            this.tab_Mtype.Controls.Add(this.dataGridView_Mtype);
-            this.tab_Mtype.Location = new System.Drawing.Point(4, 22);
-            this.tab_Mtype.Name = "tab_Mtype";
-            this.tab_Mtype.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Mtype.Size = new System.Drawing.Size(574, 194);
-            this.tab_Mtype.TabIndex = 1;
-            this.tab_Mtype.Text = "注音";
-            this.tab_Mtype.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView_Mtype
-            // 
-            this.dataGridView_Mtype.AllowUserToAddRows = false;
-            this.dataGridView_Mtype.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView_Mtype.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Mtype.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column2,
-            this.Column3,
-            this.Column4});
-            this.dataGridView_Mtype.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView_Mtype.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView_Mtype.Name = "dataGridView_Mtype";
-            this.dataGridView_Mtype.RowTemplate.Height = 23;
-            this.dataGridView_Mtype.Size = new System.Drawing.Size(568, 188);
-            this.dataGridView_Mtype.TabIndex = 0;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "原始读音";
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "目标读音";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "替换后读音";
-            this.Column4.Name = "Column4";
-            // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
             // 
             // tab_Split
             // 
@@ -305,13 +260,72 @@
             this.SplitValue.Name = "SplitValue";
             this.SplitValue.ReadOnly = true;
             // 
+            // tab_Mtype
+            // 
+            this.tab_Mtype.AutoScroll = true;
+            this.tab_Mtype.Controls.Add(this.dataGridView_Mtype);
+            this.tab_Mtype.Location = new System.Drawing.Point(4, 22);
+            this.tab_Mtype.Name = "tab_Mtype";
+            this.tab_Mtype.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_Mtype.Size = new System.Drawing.Size(739, 232);
+            this.tab_Mtype.TabIndex = 1;
+            this.tab_Mtype.Text = "注音";
+            this.tab_Mtype.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView_Mtype
+            // 
+            this.dataGridView_Mtype.AllowUserToAddRows = false;
+            this.dataGridView_Mtype.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_Mtype.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Mtype.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MarkerAddId,
+            this.MarkerOldText,
+            this.MarkerAddOldValue,
+            this.MarkerAddNewValue});
+            this.dataGridView_Mtype.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Mtype.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_Mtype.Name = "dataGridView_Mtype";
+            this.dataGridView_Mtype.RowHeadersVisible = false;
+            this.dataGridView_Mtype.RowTemplate.Height = 23;
+            this.dataGridView_Mtype.Size = new System.Drawing.Size(733, 226);
+            this.dataGridView_Mtype.TabIndex = 0;
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // MarkerAddId
+            // 
+            this.MarkerAddId.FillWeight = 25F;
+            this.MarkerAddId.HeaderText = "编号";
+            this.MarkerAddId.Name = "MarkerAddId";
+            this.MarkerAddId.ReadOnly = true;
+            // 
+            // MarkerOldText
+            // 
+            this.MarkerOldText.HeaderText = "原始文本";
+            this.MarkerOldText.Name = "MarkerOldText";
+            this.MarkerOldText.Visible = false;
+            // 
+            // MarkerAddOldValue
+            // 
+            this.MarkerAddOldValue.HeaderText = "老读音";
+            this.MarkerAddOldValue.Name = "MarkerAddOldValue";
+            this.MarkerAddOldValue.ReadOnly = true;
+            // 
+            // MarkerAddNewValue
+            // 
+            this.MarkerAddNewValue.HeaderText = "新读音";
+            this.MarkerAddNewValue.Name = "MarkerAddNewValue";
+            // 
             // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(590, 393);
+            this.ClientSize = new System.Drawing.Size(758, 409);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -322,11 +336,11 @@
             this.tabControl.ResumeLayout(false);
             this.tab_Family.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Fmaily)).EndInit();
+            this.tab_Split.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).EndInit();
             this.tab_Mtype.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-            this.tab_Split.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -342,9 +356,6 @@
         private System.Windows.Forms.TextBox text_fileNames;
         private System.Windows.Forms.DataGridView dataGridView_Fmaily;
         private System.Windows.Forms.DataGridView dataGridView_Mtype;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button btn_Reacher;
         private System.Windows.Forms.Button button_Replece;
@@ -358,6 +369,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SplitId;
         private System.Windows.Forms.DataGridViewTextBoxColumn SplitOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn SplitValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerOldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddOldValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddNewValue;
     }
 }
 
