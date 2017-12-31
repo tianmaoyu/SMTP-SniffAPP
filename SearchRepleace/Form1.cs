@@ -285,6 +285,11 @@ namespace SearchRepleace
                 var markerAdd = new MarkerAdd(this.dataGridView_Mtype);
                 markerAdd.WriteDataView(fileNames[0]);
             }
+            if (currentTabName.Equals(this.tabPage_Language.Name))
+            {
+                var language = new language(this.dataGridView_Language);
+                language.WriteDataView(fileNames[0]);
+            }
         }
 
         private void button_Replece_Click(object sender, EventArgs e)
@@ -314,6 +319,11 @@ namespace SearchRepleace
             {
                 var markerAdd = new MarkerAdd(this.dataGridView_Mtype);
                 markerAdd.ReadDataView();
+            }
+            if (currentTabName.Equals(this.tabPage_Language.Name))
+            {
+                var language = new language(this.dataGridView_Language);
+                language.ReadDataView();
             }
         }
 

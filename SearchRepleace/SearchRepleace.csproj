@@ -53,6 +53,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="language.cs" />
     <Compile Include="MarkerAdd.cs" />
     <Compile Include="MarkerSplit.cs" />
     <Compile Include="Program.cs" />

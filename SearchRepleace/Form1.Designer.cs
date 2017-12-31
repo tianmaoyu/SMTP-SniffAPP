@@ -50,11 +50,17 @@
             this.SplitValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_Mtype = new System.Windows.Forms.TabPage();
             this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.tabPage_Language = new System.Windows.Forms.TabPage();
+            this.dataGridView_Language = new System.Windows.Forms.DataGridView();
+            this.LanguageId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LanguageOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LanguageOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LanguageNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
@@ -64,6 +70,8 @@
             this.tab_Mtype.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            this.tabPage_Language.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -138,6 +146,7 @@
             this.tabControl.Controls.Add(this.tab_Family);
             this.tabControl.Controls.Add(this.tab_Split);
             this.tabControl.Controls.Add(this.tab_Mtype);
+            this.tabControl.Controls.Add(this.tabPage_Language);
             this.tabControl.Location = new System.Drawing.Point(8, 104);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -151,7 +160,7 @@
             this.tab_Family.Location = new System.Drawing.Point(4, 22);
             this.tab_Family.Name = "tab_Family";
             this.tab_Family.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Family.Size = new System.Drawing.Size(574, 238);
+            this.tab_Family.Size = new System.Drawing.Size(739, 232);
             this.tab_Family.TabIndex = 0;
             this.tab_Family.Text = "文字";
             this.tab_Family.UseVisualStyleBackColor = true;
@@ -173,7 +182,7 @@
             this.dataGridView_Fmaily.Name = "dataGridView_Fmaily";
             this.dataGridView_Fmaily.RowHeadersVisible = false;
             this.dataGridView_Fmaily.RowTemplate.Height = 23;
-            this.dataGridView_Fmaily.Size = new System.Drawing.Size(568, 232);
+            this.dataGridView_Fmaily.Size = new System.Drawing.Size(733, 226);
             this.dataGridView_Fmaily.TabIndex = 0;
             // 
             // OldText
@@ -218,7 +227,7 @@
             this.tab_Split.Location = new System.Drawing.Point(4, 22);
             this.tab_Split.Name = "tab_Split";
             this.tab_Split.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Split.Size = new System.Drawing.Size(574, 238);
+            this.tab_Split.Size = new System.Drawing.Size(739, 232);
             this.tab_Split.TabIndex = 2;
             this.tab_Split.Text = "拆分";
             this.tab_Split.UseVisualStyleBackColor = true;
@@ -237,7 +246,7 @@
             this.dataGridView_Split.Name = "dataGridView_Split";
             this.dataGridView_Split.RowHeadersVisible = false;
             this.dataGridView_Split.RowTemplate.Height = 23;
-            this.dataGridView_Split.Size = new System.Drawing.Size(568, 232);
+            this.dataGridView_Split.Size = new System.Drawing.Size(733, 226);
             this.dataGridView_Split.TabIndex = 0;
             // 
             // SplitId
@@ -290,11 +299,6 @@
             this.dataGridView_Mtype.Size = new System.Drawing.Size(733, 226);
             this.dataGridView_Mtype.TabIndex = 0;
             // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
             // MarkerAddId
             // 
             this.MarkerAddId.FillWeight = 25F;
@@ -319,6 +323,65 @@
             this.MarkerAddNewValue.HeaderText = "新读音";
             this.MarkerAddNewValue.Name = "MarkerAddNewValue";
             // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // tabPage_Language
+            // 
+            this.tabPage_Language.Controls.Add(this.dataGridView_Language);
+            this.tabPage_Language.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_Language.Name = "tabPage_Language";
+            this.tabPage_Language.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_Language.Size = new System.Drawing.Size(739, 232);
+            this.tabPage_Language.TabIndex = 3;
+            this.tabPage_Language.Text = "词典";
+            this.tabPage_Language.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView_Language
+            // 
+            this.dataGridView_Language.AllowUserToAddRows = false;
+            this.dataGridView_Language.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_Language.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Language.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LanguageId,
+            this.LanguageOldText,
+            this.LanguageOldValue,
+            this.LanguageNewValue});
+            this.dataGridView_Language.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Language.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_Language.Name = "dataGridView_Language";
+            this.dataGridView_Language.RowHeadersVisible = false;
+            this.dataGridView_Language.RowTemplate.Height = 23;
+            this.dataGridView_Language.Size = new System.Drawing.Size(733, 226);
+            this.dataGridView_Language.TabIndex = 0;
+            // 
+            // LanguageId
+            // 
+            this.LanguageId.FillWeight = 30F;
+            this.LanguageId.HeaderText = "编号";
+            this.LanguageId.Name = "LanguageId";
+            this.LanguageId.ReadOnly = true;
+            // 
+            // LanguageOldText
+            // 
+            this.LanguageOldText.HeaderText = "LanguageOldText";
+            this.LanguageOldText.Name = "LanguageOldText";
+            this.LanguageOldText.ReadOnly = true;
+            this.LanguageOldText.Visible = false;
+            // 
+            // LanguageOldValue
+            // 
+            this.LanguageOldValue.HeaderText = "老字典";
+            this.LanguageOldValue.Name = "LanguageOldValue";
+            this.LanguageOldValue.ReadOnly = true;
+            // 
+            // LanguageNewValue
+            // 
+            this.LanguageNewValue.HeaderText = "新字典";
+            this.LanguageNewValue.Name = "LanguageNewValue";
+            // 
             // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -341,6 +404,8 @@
             this.tab_Mtype.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            this.tabPage_Language.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -373,6 +438,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MarkerOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddOldValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddNewValue;
+        private System.Windows.Forms.TabPage tabPage_Language;
+        private System.Windows.Forms.DataGridView dataGridView_Language;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LanguageId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LanguageOldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LanguageOldValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LanguageNewValue;
     }
 }
 
