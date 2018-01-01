@@ -26,11 +26,11 @@ namespace 兴哥投票
                 {
                     var match= Regex.Match(html, pattrent);
                     Console.WriteLine($"{match.Value}");
-                    Thread.Sleep(500);
+                    //Thread.Sleep(500);
                 }
                 else
                 {
-                    count++;
+                    //count++;
                 }
             }
             Console.WriteLine("任意按钮退出");
