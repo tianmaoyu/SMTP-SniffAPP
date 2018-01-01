@@ -56,6 +56,7 @@
     <Compile Include="language.cs" />
     <Compile Include="MarkerAdd.cs" />
     <Compile Include="MarkerSplit.cs" />
+    <Compile Include="Paragraph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

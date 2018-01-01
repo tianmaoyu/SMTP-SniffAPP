@@ -54,13 +54,19 @@
             this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.tabPage_Language = new System.Windows.Forms.TabPage();
             this.dataGridView_Language = new System.Windows.Forms.DataGridView();
             this.LanguageId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LanguageOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LanguageOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LanguageNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.tabPage_Paragraph = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ParagraphId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParagraphOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParagraphOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParagraphIsFillter = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
@@ -69,9 +75,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).BeginInit();
             this.tab_Mtype.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.tabPage_Language.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            this.tabPage_Paragraph.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -147,6 +155,7 @@
             this.tabControl.Controls.Add(this.tab_Split);
             this.tabControl.Controls.Add(this.tab_Mtype);
             this.tabControl.Controls.Add(this.tabPage_Language);
+            this.tabControl.Controls.Add(this.tabPage_Paragraph);
             this.tabControl.Location = new System.Drawing.Point(8, 104);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -323,11 +332,6 @@
             this.MarkerAddNewValue.HeaderText = "新读音";
             this.MarkerAddNewValue.Name = "MarkerAddNewValue";
             // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
             // tabPage_Language
             // 
             this.tabPage_Language.Controls.Add(this.dataGridView_Language);
@@ -382,6 +386,69 @@
             this.LanguageNewValue.HeaderText = "新字典";
             this.LanguageNewValue.Name = "LanguageNewValue";
             // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // tabPage_Paragraph
+            // 
+            this.tabPage_Paragraph.Controls.Add(this.dataGridView1);
+            this.tabPage_Paragraph.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_Paragraph.Name = "tabPage_Paragraph";
+            this.tabPage_Paragraph.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_Paragraph.Size = new System.Drawing.Size(739, 232);
+            this.tabPage_Paragraph.TabIndex = 4;
+            this.tabPage_Paragraph.Text = "段落样式筛选";
+            this.tabPage_Paragraph.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ParagraphId,
+            this.ParagraphOldText,
+            this.ParagraphOldValue,
+            this.ParagraphIsFillter});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(733, 226);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // ParagraphId
+            // 
+            this.ParagraphId.FillWeight = 30F;
+            this.ParagraphId.HeaderText = "编号";
+            this.ParagraphId.Name = "ParagraphId";
+            this.ParagraphId.ReadOnly = true;
+            // 
+            // ParagraphOldText
+            // 
+            this.ParagraphOldText.HeaderText = "OldText";
+            this.ParagraphOldText.Name = "ParagraphOldText";
+            this.ParagraphOldText.ReadOnly = true;
+            this.ParagraphOldText.Visible = false;
+            // 
+            // ParagraphOldValue
+            // 
+            this.ParagraphOldValue.HeaderText = "段落样式";
+            this.ParagraphOldValue.Name = "ParagraphOldValue";
+            this.ParagraphOldValue.ReadOnly = true;
+            // 
+            // ParagraphIsFillter
+            // 
+            this.ParagraphIsFillter.FillWeight = 30F;
+            this.ParagraphIsFillter.HeaderText = "是否处理";
+            this.ParagraphIsFillter.Name = "ParagraphIsFillter";
+            this.ParagraphIsFillter.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ParagraphIsFillter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -403,9 +470,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Split)).EndInit();
             this.tab_Mtype.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.tabPage_Language.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            this.tabPage_Paragraph.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -444,6 +513,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LanguageOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn LanguageOldValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn LanguageNewValue;
+        private System.Windows.Forms.TabPage tabPage_Paragraph;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ParagraphIsFillter;
     }
 }
 
