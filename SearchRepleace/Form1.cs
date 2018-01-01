@@ -290,6 +290,11 @@ namespace SearchRepleace
                 var language = new language(this.dataGridView_Language);
                 language.WriteDataView(fileNames[0]);
             }
+            if (currentTabName.Equals(this.tabPage_Paragraph.Name))
+            {
+                var language = new Paragraph(this.dataGridView_Paragraph);
+                language.WriteDataView(fileNames[0]);
+            }
         }
 
         private void button_Replece_Click(object sender, EventArgs e)
@@ -324,6 +329,11 @@ namespace SearchRepleace
             {
                 var language = new language(this.dataGridView_Language);
                 language.ReadDataView();
+            }
+            if (currentTabName.Equals(this.tabPage_Paragraph.Name))
+            {
+                var paragraph = new Paragraph(this.dataGridView_Paragraph);
+                paragraph.ReadDataView();
             }
         }
 

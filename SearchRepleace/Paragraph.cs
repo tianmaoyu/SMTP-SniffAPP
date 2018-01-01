@@ -115,14 +115,28 @@ namespace SearchRepleace
             if (_entities.Any()) this.ReplaceCondition();
             foreach (var entity in _entities)
             {
-               
-                //FileHelper.Replace(Paragraph.fileName, entity.OldText, newText);
+                var _oldValueLineText = $"<inlPgfTag `{entity.OldValue}'>\r";
+                var _newVlueLineText = $@"<inlPgfTag `{entity.OldValue}'>
+<inlConditional 
+< inlInCondition `CodeNOT01'>
+> # end of Conditional
+< inlParaLine
+< inlString `'>";
+                var _newTextTemp = entity.OldText.Replace(_oldValueLineText, _newVlueLineText);
+                var _oldEndParagphLine=$@"> # end of ParaLine";
+                var _newEndParagphLine = $@"<inlUnconditional >
+<inlString `'>
+> # end of ParaLine
+";
+                var newText = _newTextTemp.Replace(_oldEndParagphLine, _newEndParagphLine);
+                FileHelper.Replace(Paragraph.fileName, entity.OldText, newText);
             }
         }
         private void ReplaceCondition()
         {
-            var oldText ="<inlConditionCatalog\r";
-            var newText = @"<inlConditionCatalog\r
+            var oldText =@"<inlConditionCatalog
+";
+            var newText = @"<inlConditionCatalog
 <inlCondition 
   <inlCTag `CodeNOT'>
   <inlCState CHidden>

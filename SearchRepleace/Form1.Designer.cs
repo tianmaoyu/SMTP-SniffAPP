@@ -62,7 +62,7 @@
             this.LanguageNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.tabPage_Paragraph = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView_Paragraph = new System.Windows.Forms.DataGridView();
             this.ParagraphId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,7 +79,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.tabPage_Paragraph.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -393,7 +393,7 @@
             // 
             // tabPage_Paragraph
             // 
-            this.tabPage_Paragraph.Controls.Add(this.dataGridView1);
+            this.tabPage_Paragraph.Controls.Add(this.dataGridView_Paragraph);
             this.tabPage_Paragraph.Location = new System.Drawing.Point(4, 22);
             this.tabPage_Paragraph.Name = "tabPage_Paragraph";
             this.tabPage_Paragraph.Padding = new System.Windows.Forms.Padding(3);
@@ -402,24 +402,24 @@
             this.tabPage_Paragraph.Text = "段落样式筛选";
             this.tabPage_Paragraph.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dataGridView_Paragraph
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView_Paragraph.AllowUserToAddRows = false;
+            this.dataGridView_Paragraph.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_Paragraph.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Paragraph.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ParagraphId,
             this.ParagraphOldText,
             this.ParagraphOldValue,
             this.ParagraphIsFillter});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(733, 226);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView_Paragraph.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Paragraph.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dataGridView_Paragraph.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_Paragraph.Name = "dataGridView_Paragraph";
+            this.dataGridView_Paragraph.RowHeadersVisible = false;
+            this.dataGridView_Paragraph.RowTemplate.Height = 23;
+            this.dataGridView_Paragraph.Size = new System.Drawing.Size(733, 226);
+            this.dataGridView_Paragraph.TabIndex = 0;
             // 
             // ParagraphId
             // 
@@ -474,7 +474,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.tabPage_Paragraph.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -514,7 +514,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LanguageOldValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn LanguageNewValue;
         private System.Windows.Forms.TabPage tabPage_Paragraph;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView_Paragraph;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldValue;
