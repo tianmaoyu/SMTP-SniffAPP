@@ -287,7 +287,7 @@
             this.tab_Mtype.Padding = new System.Windows.Forms.Padding(3);
             this.tab_Mtype.Size = new System.Drawing.Size(739, 232);
             this.tab_Mtype.TabIndex = 1;
-            this.tab_Mtype.Text = "注音";
+            this.tab_Mtype.Text = "添加注音";
             this.tab_Mtype.UseVisualStyleBackColor = true;
             // 
             // dataGridView_Mtype
