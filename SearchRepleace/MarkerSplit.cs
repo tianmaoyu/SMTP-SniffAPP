@@ -104,7 +104,7 @@ namespace SearchRepleace
                 var splitEntity = new MarkerSplitEntity();
                 splitEntity.OldText = row.Cells["SplitOldText"].Value.ToString()+"\r";//加一个回车
                 splitEntity.OldValue = row.Cells["SplitValue"].Value.ToString();
-                if (splitEntity.OldValue.Contains(@"\]") && splitEntity.OldValue.Contains(@";"))
+                if (splitEntity.OldValue.Contains(@"\]")) //&& splitEntity.OldValue.Contains(@";")
                 {
                     splitEntity.IsSpecial = true;
                 }

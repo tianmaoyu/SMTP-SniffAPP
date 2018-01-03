@@ -50,23 +50,24 @@
             this.SplitValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_Mtype = new System.Windows.Forms.TabPage();
             this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
-            this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage_Language = new System.Windows.Forms.TabPage();
             this.dataGridView_Language = new System.Windows.Forms.DataGridView();
             this.LanguageId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LanguageOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LanguageOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LanguageNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.tabPage_Paragraph = new System.Windows.Forms.TabPage();
             this.dataGridView_Paragraph = new System.Windows.Forms.DataGridView();
             this.ParagraphId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphIsFillter = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddIsAdd = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
@@ -77,9 +78,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).BeginInit();
             this.tabPage_Language.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.tabPage_Paragraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -299,6 +300,7 @@
             this.MarkerAddId,
             this.MarkerOldText,
             this.MarkerAddOldValue,
+            this.MarkerAddIsAdd,
             this.MarkerAddNewValue});
             this.dataGridView_Mtype.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_Mtype.Location = new System.Drawing.Point(3, 3);
@@ -307,30 +309,6 @@
             this.dataGridView_Mtype.RowTemplate.Height = 23;
             this.dataGridView_Mtype.Size = new System.Drawing.Size(733, 226);
             this.dataGridView_Mtype.TabIndex = 0;
-            // 
-            // MarkerAddId
-            // 
-            this.MarkerAddId.FillWeight = 25F;
-            this.MarkerAddId.HeaderText = "编号";
-            this.MarkerAddId.Name = "MarkerAddId";
-            this.MarkerAddId.ReadOnly = true;
-            // 
-            // MarkerOldText
-            // 
-            this.MarkerOldText.HeaderText = "原始文本";
-            this.MarkerOldText.Name = "MarkerOldText";
-            this.MarkerOldText.Visible = false;
-            // 
-            // MarkerAddOldValue
-            // 
-            this.MarkerAddOldValue.HeaderText = "老读音";
-            this.MarkerAddOldValue.Name = "MarkerAddOldValue";
-            this.MarkerAddOldValue.ReadOnly = true;
-            // 
-            // MarkerAddNewValue
-            // 
-            this.MarkerAddNewValue.HeaderText = "新读音";
-            this.MarkerAddNewValue.Name = "MarkerAddNewValue";
             // 
             // tabPage_Language
             // 
@@ -385,11 +363,6 @@
             // 
             this.LanguageNewValue.HeaderText = "新字典";
             this.LanguageNewValue.Name = "LanguageNewValue";
-            // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
             // 
             // tabPage_Paragraph
             // 
@@ -449,6 +422,41 @@
             this.ParagraphIsFillter.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ParagraphIsFillter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // MarkerAddId
+            // 
+            this.MarkerAddId.FillWeight = 25F;
+            this.MarkerAddId.HeaderText = "编号";
+            this.MarkerAddId.Name = "MarkerAddId";
+            this.MarkerAddId.ReadOnly = true;
+            // 
+            // MarkerOldText
+            // 
+            this.MarkerOldText.HeaderText = "原始文本";
+            this.MarkerOldText.Name = "MarkerOldText";
+            this.MarkerOldText.Visible = false;
+            // 
+            // MarkerAddOldValue
+            // 
+            this.MarkerAddOldValue.HeaderText = "老读音";
+            this.MarkerAddOldValue.Name = "MarkerAddOldValue";
+            this.MarkerAddOldValue.ReadOnly = true;
+            // 
+            // MarkerAddIsAdd
+            // 
+            this.MarkerAddIsAdd.FillWeight = 30F;
+            this.MarkerAddIsAdd.HeaderText = "是否添加";
+            this.MarkerAddIsAdd.Name = "MarkerAddIsAdd";
+            // 
+            // MarkerAddNewValue
+            // 
+            this.MarkerAddNewValue.HeaderText = "新读音";
+            this.MarkerAddNewValue.Name = "MarkerAddNewValue";
+            // 
             // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -472,9 +480,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mtype)).EndInit();
             this.tabPage_Language.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.tabPage_Paragraph.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -503,10 +511,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SplitId;
         private System.Windows.Forms.DataGridViewTextBoxColumn SplitOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn SplitValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerOldText;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddOldValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddNewValue;
         private System.Windows.Forms.TabPage tabPage_Language;
         private System.Windows.Forms.DataGridView dataGridView_Language;
         private System.Windows.Forms.DataGridViewTextBoxColumn LanguageId;
@@ -519,6 +523,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ParagraphIsFillter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerOldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddOldValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn MarkerAddIsAdd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddNewValue;
     }
 }
 
