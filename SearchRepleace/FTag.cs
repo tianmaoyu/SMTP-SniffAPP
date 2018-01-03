@@ -19,7 +19,7 @@ namespace SearchRepleace
 
         private string partternFTagInside = "(?:<inlFTag `).*?(?:'>)";
 
-        private string partternFont = @"(?s)(?:<inlFont).*?(?:> # end of Font)";
+        private string partternFont = @"(?s)(?:<inlFTag).*?(?:> # end of Font)";
 
         private static string fileName;
 
@@ -107,7 +107,7 @@ namespace SearchRepleace
                 addEntity.OldText = row.Cells["FTagOldText"].Value.ToString();
                 addEntity.OldValue = row.Cells["FTagOldValue"].Value.ToString();
                 addEntity.IsFillter = !string.IsNullOrEmpty(row.Cells["FTagIsFillter"]?.Value?.ToString());
-                if (Regex.Matches(addEntity.OldValue, this.partternFTagInside).Count > 1)
+                if (Regex.Matches(addEntity.OldText, this.partternFTagInside).Count > 1)
                 {
                     addEntity.IsInside = true;
                 }
@@ -120,7 +120,7 @@ namespace SearchRepleace
         //没有内部的
         private void ReplaceFTagNoInside(List<FTagEntity> entities)
         {
-            var _entities = entities?.Where(i => !i.IsInside).ToList();
+            var _entities = entities?.Where(i => !i.IsInside && i.IsFillter).ToList();
             if (_entities == null || _entities.Count < 1) return;
             foreach (var entity in _entities)
             {
@@ -130,7 +130,7 @@ namespace SearchRepleace
 <inlInCondition `CodeNOT'>
 > # end of Conditional";
                 var _oldParaLineline = "> # end of ParaLine";
-                var _newParalineLine = @"<inlUnconditional >
+                var _newParalineLine = @"<inlUnconditional >\r
 <inlString `'>
 > # end of ParaLine";
                 var _newTextTemp = entity.OldText.Replace(_oldFontLine, _newFontLine);
@@ -139,22 +139,23 @@ namespace SearchRepleace
             }
         }
 
-        //没有内部的
+        //内部的
         private void ReplaceFTagInside(List<FTagEntity> entities)
         {
-            var _entities = entities?.Where(i => i.IsInside).ToList();
+            var _entities = entities?.Where(i => i.IsInside&& i.IsFillter).ToList();
             if (_entities == null || _entities.Count < 1) return;
             foreach (var entity in _entities)
             {
                 var matchs = Regex.Matches(entity.OldText, this.partternFont);
-                if (!(matchs.Count > 1)) continue;
+
                 var _oldFistFontText = matchs[0].Value;
-                var _addText = @"<inlConditional 
+                var _addText = @"<inlConditional
 <inlInCondition `CodeNOT'>
 > # end of Conditional";
-                var _newFistFontText = _oldFistFontText + _addText;
+                var _newFistFontText = _oldFistFontText+"\r" + _addText;
                 var _newTextTemp = entity.OldText.Replace(_oldFistFontText, _newFistFontText);
-                var _oldLastFontText = matchs[matchs.Count - 1].Value;
+                var _oldLastFontText = @"<inlFont 
+" +matchs[matchs.Count - 1].Value;
                 var _addText2 = @"<inlUnconditional >
 <inlString `'>
 ";

@@ -295,6 +295,11 @@ namespace SearchRepleace
                 var language = new Paragraph(this.dataGridView_Paragraph);
                 language.WriteDataView(fileNames[0]);
             }
+            if (currentTabName.Equals(this.tabPage_FTag.Name))
+            {
+                var fTag = new FTag(this.dataGridView_FTag);
+                fTag.WriteDataView(fileNames[0]);
+            }
         }
 
         private void button_Replece_Click(object sender, EventArgs e)
@@ -334,6 +339,11 @@ namespace SearchRepleace
             {
                 var paragraph = new Paragraph(this.dataGridView_Paragraph);
                 paragraph.ReadDataView();
+            }
+            if (currentTabName.Equals(this.tabPage_FTag.Name))
+            {
+                var fTag = new FTag(this.dataGridView_FTag);
+                fTag.ReadDataView();
             }
         }
 

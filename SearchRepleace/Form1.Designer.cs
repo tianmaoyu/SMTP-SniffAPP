@@ -50,6 +50,11 @@
             this.SplitValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_Mtype = new System.Windows.Forms.TabPage();
             this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
+            this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddIsAdd = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage_Language = new System.Windows.Forms.TabPage();
             this.dataGridView_Language = new System.Windows.Forms.DataGridView();
             this.LanguageId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,12 +67,13 @@
             this.ParagraphOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphIsFillter = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tabPage_FTag = new System.Windows.Forms.TabPage();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerAddIsAdd = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView_FTag = new System.Windows.Forms.DataGridView();
+            this.FTagId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FTagOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FTagOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FTagIsFillter = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
@@ -80,7 +86,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).BeginInit();
             this.tabPage_Paragraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).BeginInit();
+            this.tabPage_FTag.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_FTag)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -157,6 +165,7 @@
             this.tabControl.Controls.Add(this.tab_Mtype);
             this.tabControl.Controls.Add(this.tabPage_Language);
             this.tabControl.Controls.Add(this.tabPage_Paragraph);
+            this.tabControl.Controls.Add(this.tabPage_FTag);
             this.tabControl.Location = new System.Drawing.Point(8, 104);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -310,6 +319,36 @@
             this.dataGridView_Mtype.Size = new System.Drawing.Size(733, 226);
             this.dataGridView_Mtype.TabIndex = 0;
             // 
+            // MarkerAddId
+            // 
+            this.MarkerAddId.FillWeight = 25F;
+            this.MarkerAddId.HeaderText = "编号";
+            this.MarkerAddId.Name = "MarkerAddId";
+            this.MarkerAddId.ReadOnly = true;
+            // 
+            // MarkerOldText
+            // 
+            this.MarkerOldText.HeaderText = "原始文本";
+            this.MarkerOldText.Name = "MarkerOldText";
+            this.MarkerOldText.Visible = false;
+            // 
+            // MarkerAddOldValue
+            // 
+            this.MarkerAddOldValue.HeaderText = "老读音";
+            this.MarkerAddOldValue.Name = "MarkerAddOldValue";
+            this.MarkerAddOldValue.ReadOnly = true;
+            // 
+            // MarkerAddIsAdd
+            // 
+            this.MarkerAddIsAdd.FillWeight = 30F;
+            this.MarkerAddIsAdd.HeaderText = "是否添加";
+            this.MarkerAddIsAdd.Name = "MarkerAddIsAdd";
+            // 
+            // MarkerAddNewValue
+            // 
+            this.MarkerAddNewValue.HeaderText = "新读音";
+            this.MarkerAddNewValue.Name = "MarkerAddNewValue";
+            // 
             // tabPage_Language
             // 
             this.tabPage_Language.Controls.Add(this.dataGridView_Language);
@@ -422,40 +461,66 @@
             this.ParagraphIsFillter.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ParagraphIsFillter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // tabPage_FTag
+            // 
+            this.tabPage_FTag.Controls.Add(this.dataGridView_FTag);
+            this.tabPage_FTag.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_FTag.Name = "tabPage_FTag";
+            this.tabPage_FTag.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_FTag.Size = new System.Drawing.Size(739, 232);
+            this.tabPage_FTag.TabIndex = 5;
+            this.tabPage_FTag.Text = "字符样式筛选";
+            this.tabPage_FTag.UseVisualStyleBackColor = true;
+            // 
             // fileSystemWatcher1
             // 
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
-            // MarkerAddId
+            // dataGridView_FTag
             // 
-            this.MarkerAddId.FillWeight = 25F;
-            this.MarkerAddId.HeaderText = "编号";
-            this.MarkerAddId.Name = "MarkerAddId";
-            this.MarkerAddId.ReadOnly = true;
+            this.dataGridView_FTag.AllowUserToAddRows = false;
+            this.dataGridView_FTag.AllowUserToDeleteRows = false;
+            this.dataGridView_FTag.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_FTag.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_FTag.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.FTagId,
+            this.FTagOldText,
+            this.FTagOldValue,
+            this.FTagIsFillter});
+            this.dataGridView_FTag.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_FTag.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_FTag.Name = "dataGridView_FTag";
+            this.dataGridView_FTag.RowHeadersVisible = false;
+            this.dataGridView_FTag.RowTemplate.Height = 23;
+            this.dataGridView_FTag.Size = new System.Drawing.Size(733, 226);
+            this.dataGridView_FTag.TabIndex = 0;
             // 
-            // MarkerOldText
+            // FTagId
             // 
-            this.MarkerOldText.HeaderText = "原始文本";
-            this.MarkerOldText.Name = "MarkerOldText";
-            this.MarkerOldText.Visible = false;
+            this.FTagId.FillWeight = 30F;
+            this.FTagId.HeaderText = "编号";
+            this.FTagId.Name = "FTagId";
+            this.FTagId.ReadOnly = true;
             // 
-            // MarkerAddOldValue
+            // FTagOldText
             // 
-            this.MarkerAddOldValue.HeaderText = "老读音";
-            this.MarkerAddOldValue.Name = "MarkerAddOldValue";
-            this.MarkerAddOldValue.ReadOnly = true;
+            this.FTagOldText.HeaderText = "FTagOldText";
+            this.FTagOldText.Name = "FTagOldText";
+            this.FTagOldText.ReadOnly = true;
+            this.FTagOldText.Visible = false;
             // 
-            // MarkerAddIsAdd
+            // FTagOldValue
             // 
-            this.MarkerAddIsAdd.FillWeight = 30F;
-            this.MarkerAddIsAdd.HeaderText = "是否添加";
-            this.MarkerAddIsAdd.Name = "MarkerAddIsAdd";
+            this.FTagOldValue.HeaderText = "字符样式";
+            this.FTagOldValue.Name = "FTagOldValue";
+            this.FTagOldValue.ReadOnly = true;
             // 
-            // MarkerAddNewValue
+            // FTagIsFillter
             // 
-            this.MarkerAddNewValue.HeaderText = "新读音";
-            this.MarkerAddNewValue.Name = "MarkerAddNewValue";
+            this.FTagIsFillter.FillWeight = 30F;
+            this.FTagIsFillter.HeaderText = "是否筛选";
+            this.FTagIsFillter.Name = "FTagIsFillter";
             // 
             // demo
             // 
@@ -482,7 +547,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Language)).EndInit();
             this.tabPage_Paragraph.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).EndInit();
+            this.tabPage_FTag.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_FTag)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -528,6 +595,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddOldValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn MarkerAddIsAdd;
         private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddNewValue;
+        private System.Windows.Forms.TabPage tabPage_FTag;
+        private System.Windows.Forms.DataGridView dataGridView_FTag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FTagId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FTagOldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FTagOldValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn FTagIsFillter;
     }
 }
 
