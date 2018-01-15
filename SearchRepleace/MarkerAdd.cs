@@ -89,7 +89,7 @@ namespace SearchRepleace
 
                 var oldValueCell = new DataGridViewTextBoxCell();
                 oldValueCell.Value = entity.OldValue;
-
+                //暂时已经隐藏
                 var isAddCell = new DataGridViewCheckBoxCell();
                 isAddCell.Selected = false;
 
@@ -128,7 +128,7 @@ namespace SearchRepleace
         //普通替换
         private void ReplaceCommon(List<MarkerAddEntity> entities)
         {
-            var _entities = entities.Where(i => i.IsAdd && i.IsComplex == false).ToList();
+            var _entities = entities.Where(i => !i.IsAdd && i.IsComplex == false).ToList();
             foreach (var entity in _entities)
             {
                 var _newValue = string.Empty;
@@ -154,7 +154,7 @@ namespace SearchRepleace
 
         private void ReplaceComplex(List<MarkerAddEntity> entities)
         {
-            var _entities = entities.Where(i => i.IsAdd && i.IsComplex).ToList();
+            var _entities = entities.Where(i => !i.IsAdd && i.IsComplex).ToList();
             foreach (var entity in _entities)
             {
                 var _newValue = string.Empty;

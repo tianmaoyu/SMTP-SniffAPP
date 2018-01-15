@@ -130,7 +130,7 @@ namespace SearchRepleace
 <inlInCondition `CodeNOT'>
 > # end of Conditional";
                 var _oldParaLineline = "> # end of ParaLine";
-                var _newParalineLine = @"<inlUnconditional >\r
+                var _newParalineLine = @"<inlUnconditional >
 <inlString `'>
 > # end of ParaLine";
                 var _newTextTemp = entity.OldText.Replace(_oldFontLine, _newFontLine);

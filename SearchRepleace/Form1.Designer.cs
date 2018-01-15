@@ -30,11 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(demo));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btn_clearFile = new System.Windows.Forms.Button();
+            this.dataGridView_file = new System.Windows.Forms.DataGridView();
             this.button_Replece = new System.Windows.Forms.Button();
-            this.btn_Reacher = new System.Windows.Forms.Button();
             this.btn_SelectFile = new System.Windows.Forms.Button();
-            this.text_fileNames = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tab_Family = new System.Windows.Forms.TabPage();
             this.dataGridView_Fmaily = new System.Windows.Forms.DataGridView();
@@ -50,11 +49,6 @@
             this.SplitValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_Mtype = new System.Windows.Forms.TabPage();
             this.dataGridView_Mtype = new System.Windows.Forms.DataGridView();
-            this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkerAddIsAdd = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage_Language = new System.Windows.Forms.TabPage();
             this.dataGridView_Language = new System.Windows.Forms.DataGridView();
             this.LanguageId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,13 +62,23 @@
             this.ParagraphOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParagraphIsFillter = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabPage_FTag = new System.Windows.Forms.TabPage();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.dataGridView_FTag = new System.Windows.Forms.DataGridView();
             this.FTagId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FTagOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FTagOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FTagIsFillter = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.SelectIsComplete = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.SelectFileId = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.SelectFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerOldText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddOldValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkerAddIsAdd = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.MarkerAddNewValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btn_NextFile = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_file)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tab_Family.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Fmaily)).BeginInit();
@@ -87,56 +91,62 @@
             this.tabPage_Paragraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).BeginInit();
             this.tabPage_FTag.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_FTag)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.btn_NextFile);
+            this.panel1.Controls.Add(this.btn_clearFile);
+            this.panel1.Controls.Add(this.dataGridView_file);
             this.panel1.Controls.Add(this.button_Replece);
-            this.panel1.Controls.Add(this.btn_Reacher);
             this.panel1.Controls.Add(this.btn_SelectFile);
-            this.panel1.Controls.Add(this.text_fileNames);
             this.panel1.Controls.Add(this.tabControl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(758, 409);
+            this.panel1.Size = new System.Drawing.Size(758, 450);
             this.panel1.TabIndex = 0;
             // 
-            // label1
+            // btn_clearFile
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.label1.Location = new System.Drawing.Point(13, 379);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "查找统计";
+            this.btn_clearFile.Location = new System.Drawing.Point(108, 3);
+            this.btn_clearFile.Name = "btn_clearFile";
+            this.btn_clearFile.Size = new System.Drawing.Size(75, 23);
+            this.btn_clearFile.TabIndex = 6;
+            this.btn_clearFile.Text = "清除文件";
+            this.btn_clearFile.UseVisualStyleBackColor = true;
+            this.btn_clearFile.Click += new System.EventHandler(this.btn_clearFile_Click);
+            // 
+            // dataGridView_file
+            // 
+            this.dataGridView_file.AllowUserToAddRows = false;
+            this.dataGridView_file.AllowUserToDeleteRows = false;
+            this.dataGridView_file.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_file.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_file.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SelectIsComplete,
+            this.SelectFileId,
+            this.SelectFileName});
+            this.dataGridView_file.Location = new System.Drawing.Point(9, 32);
+            this.dataGridView_file.Name = "dataGridView_file";
+            this.dataGridView_file.RowHeadersVisible = false;
+            this.dataGridView_file.RowTemplate.Height = 23;
+            this.dataGridView_file.Size = new System.Drawing.Size(737, 113);
+            this.dataGridView_file.TabIndex = 5;
             // 
             // button_Replece
             // 
             this.button_Replece.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Replece.Location = new System.Drawing.Point(576, 368);
+            this.button_Replece.Location = new System.Drawing.Point(540, 411);
             this.button_Replece.Name = "button_Replece";
             this.button_Replece.Size = new System.Drawing.Size(75, 23);
             this.button_Replece.TabIndex = 4;
             this.button_Replece.Text = "替换/拆分";
             this.button_Replece.UseVisualStyleBackColor = true;
             this.button_Replece.Click += new System.EventHandler(this.button_Replece_Click);
-            // 
-            // btn_Reacher
-            // 
-            this.btn_Reacher.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Reacher.Location = new System.Drawing.Point(495, 367);
-            this.btn_Reacher.Name = "btn_Reacher";
-            this.btn_Reacher.Size = new System.Drawing.Size(75, 23);
-            this.btn_Reacher.TabIndex = 3;
-            this.btn_Reacher.Text = "查找";
-            this.btn_Reacher.UseVisualStyleBackColor = true;
-            this.btn_Reacher.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // btn_SelectFile
             // 
@@ -146,15 +156,7 @@
             this.btn_SelectFile.TabIndex = 2;
             this.btn_SelectFile.Text = "选择文件";
             this.btn_SelectFile.UseVisualStyleBackColor = true;
-            this.btn_SelectFile.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // text_fileNames
-            // 
-            this.text_fileNames.Location = new System.Drawing.Point(9, 23);
-            this.text_fileNames.Multiline = true;
-            this.text_fileNames.Name = "text_fileNames";
-            this.text_fileNames.Size = new System.Drawing.Size(574, 75);
-            this.text_fileNames.TabIndex = 1;
+            this.btn_SelectFile.Click += new System.EventHandler(this.btn_SelectFileClick);
             // 
             // tabControl
             // 
@@ -166,11 +168,12 @@
             this.tabControl.Controls.Add(this.tabPage_Language);
             this.tabControl.Controls.Add(this.tabPage_Paragraph);
             this.tabControl.Controls.Add(this.tabPage_FTag);
-            this.tabControl.Location = new System.Drawing.Point(8, 104);
+            this.tabControl.Location = new System.Drawing.Point(8, 151);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(747, 258);
             this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tab_Family
             // 
@@ -304,6 +307,7 @@
             // 
             this.dataGridView_Mtype.AllowUserToAddRows = false;
             this.dataGridView_Mtype.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_Mtype.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_Mtype.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Mtype.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MarkerAddId,
@@ -318,36 +322,6 @@
             this.dataGridView_Mtype.RowTemplate.Height = 23;
             this.dataGridView_Mtype.Size = new System.Drawing.Size(733, 226);
             this.dataGridView_Mtype.TabIndex = 0;
-            // 
-            // MarkerAddId
-            // 
-            this.MarkerAddId.FillWeight = 25F;
-            this.MarkerAddId.HeaderText = "编号";
-            this.MarkerAddId.Name = "MarkerAddId";
-            this.MarkerAddId.ReadOnly = true;
-            // 
-            // MarkerOldText
-            // 
-            this.MarkerOldText.HeaderText = "原始文本";
-            this.MarkerOldText.Name = "MarkerOldText";
-            this.MarkerOldText.Visible = false;
-            // 
-            // MarkerAddOldValue
-            // 
-            this.MarkerAddOldValue.HeaderText = "老读音";
-            this.MarkerAddOldValue.Name = "MarkerAddOldValue";
-            this.MarkerAddOldValue.ReadOnly = true;
-            // 
-            // MarkerAddIsAdd
-            // 
-            this.MarkerAddIsAdd.FillWeight = 30F;
-            this.MarkerAddIsAdd.HeaderText = "是否添加";
-            this.MarkerAddIsAdd.Name = "MarkerAddIsAdd";
-            // 
-            // MarkerAddNewValue
-            // 
-            this.MarkerAddNewValue.HeaderText = "新读音";
-            this.MarkerAddNewValue.Name = "MarkerAddNewValue";
             // 
             // tabPage_Language
             // 
@@ -472,11 +446,6 @@
             this.tabPage_FTag.Text = "字符样式筛选";
             this.tabPage_FTag.UseVisualStyleBackColor = true;
             // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
             // dataGridView_FTag
             // 
             this.dataGridView_FTag.AllowUserToAddRows = false;
@@ -522,20 +491,90 @@
             this.FTagIsFillter.HeaderText = "是否筛选";
             this.FTagIsFillter.Name = "FTagIsFillter";
             // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // SelectIsComplete
+            // 
+            this.SelectIsComplete.FillWeight = 30F;
+            this.SelectIsComplete.HeaderText = "是否已经处理";
+            this.SelectIsComplete.Name = "SelectIsComplete";
+            this.SelectIsComplete.ReadOnly = true;
+            this.SelectIsComplete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SelectIsComplete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // SelectFileId
+            // 
+            this.SelectFileId.FillWeight = 30F;
+            this.SelectFileId.HeaderText = "编号";
+            this.SelectFileId.Name = "SelectFileId";
+            this.SelectFileId.ReadOnly = true;
+            this.SelectFileId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SelectFileId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // SelectFileName
+            // 
+            this.SelectFileName.HeaderText = "文件名称";
+            this.SelectFileName.Name = "SelectFileName";
+            this.SelectFileName.ReadOnly = true;
+            // 
+            // MarkerAddId
+            // 
+            this.MarkerAddId.FillWeight = 25F;
+            this.MarkerAddId.HeaderText = "编号";
+            this.MarkerAddId.Name = "MarkerAddId";
+            this.MarkerAddId.ReadOnly = true;
+            // 
+            // MarkerOldText
+            // 
+            this.MarkerOldText.HeaderText = "原始文本";
+            this.MarkerOldText.Name = "MarkerOldText";
+            this.MarkerOldText.Visible = false;
+            // 
+            // MarkerAddOldValue
+            // 
+            this.MarkerAddOldValue.HeaderText = "老读音";
+            this.MarkerAddOldValue.Name = "MarkerAddOldValue";
+            this.MarkerAddOldValue.ReadOnly = true;
+            // 
+            // MarkerAddIsAdd
+            // 
+            this.MarkerAddIsAdd.FillWeight = 30F;
+            this.MarkerAddIsAdd.HeaderText = "是否添加";
+            this.MarkerAddIsAdd.Name = "MarkerAddIsAdd";
+            this.MarkerAddIsAdd.Visible = false;
+            // 
+            // MarkerAddNewValue
+            // 
+            this.MarkerAddNewValue.HeaderText = "新读音";
+            this.MarkerAddNewValue.Name = "MarkerAddNewValue";
+            // 
+            // btn_NextFile
+            // 
+            this.btn_NextFile.Location = new System.Drawing.Point(662, 411);
+            this.btn_NextFile.Name = "btn_NextFile";
+            this.btn_NextFile.Size = new System.Drawing.Size(75, 23);
+            this.btn_NextFile.TabIndex = 7;
+            this.btn_NextFile.Text = "下一个文件";
+            this.btn_NextFile.UseVisualStyleBackColor = true;
+            this.btn_NextFile.Click += new System.EventHandler(this.btn_NextFile_Click);
+            // 
             // demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(758, 409);
+            this.ClientSize = new System.Drawing.Size(758, 450);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "demo";
             this.Text = "demo";
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_file)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.tab_Family.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Fmaily)).EndInit();
@@ -548,8 +587,8 @@
             this.tabPage_Paragraph.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Paragraph)).EndInit();
             this.tabPage_FTag.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_FTag)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -560,13 +599,10 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tab_Family;
         private System.Windows.Forms.TabPage tab_Mtype;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_SelectFile;
-        private System.Windows.Forms.TextBox text_fileNames;
         private System.Windows.Forms.DataGridView dataGridView_Fmaily;
         private System.Windows.Forms.DataGridView dataGridView_Mtype;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
-        private System.Windows.Forms.Button btn_Reacher;
         private System.Windows.Forms.Button button_Replece;
         private System.Windows.Forms.DataGridViewTextBoxColumn OldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
@@ -590,17 +626,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParagraphOldValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ParagraphIsFillter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerOldText;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddOldValue;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn MarkerAddIsAdd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddNewValue;
         private System.Windows.Forms.TabPage tabPage_FTag;
         private System.Windows.Forms.DataGridView dataGridView_FTag;
         private System.Windows.Forms.DataGridViewTextBoxColumn FTagId;
         private System.Windows.Forms.DataGridViewTextBoxColumn FTagOldText;
         private System.Windows.Forms.DataGridViewTextBoxColumn FTagOldValue;
         private System.Windows.Forms.DataGridViewCheckBoxColumn FTagIsFillter;
+        private System.Windows.Forms.Button btn_clearFile;
+        private System.Windows.Forms.DataGridView dataGridView_file;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn SelectIsComplete;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn SelectFileId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SelectFileName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerOldText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddOldValue;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn MarkerAddIsAdd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkerAddNewValue;
+        private System.Windows.Forms.Button btn_NextFile;
     }
 }
 
