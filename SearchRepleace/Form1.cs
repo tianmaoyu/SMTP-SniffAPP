@@ -20,6 +20,7 @@ namespace SearchRepleace
         {
             InitializeComponent();
             this.dataGridView_Mtype.KeyDown += new KeyEventHandler(Data_Past);
+            this.dataGridView_MType19.KeyDown += new KeyEventHandler(Data_Past);
         }
 
         private void btn_SelectFileClick(object sender, EventArgs e)
@@ -105,6 +106,12 @@ namespace SearchRepleace
                 var fTag = new FTag(this.dataGridView_FTag);
                 fTag.ReadDataView();
             }
+
+            if (currentTabName.Equals(this.tabPage_Mtype19.Name))
+            {
+                var mType19 = new MType19(this.dataGridView_MType19);
+                mType19.ReadDataView();
+            }
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,6 +157,11 @@ namespace SearchRepleace
             {
                 var fTag = new FTag(this.dataGridView_FTag);
                 fTag.WriteDataView(fileName);
+            }
+            if (currentTabName.Equals(this.tabPage_Mtype19.Name))
+            {
+                var mType19 = new MType19(this.dataGridView_MType19);
+                mType19.WriteDataView(fileName);
             }
         }
 
@@ -223,15 +235,30 @@ namespace SearchRepleace
                     if (string.IsNullOrEmpty(line.Trim()))
                         continue;
                     var values= line.Split('\t');
-                    foreach(DataGridViewRow row in this.dataGridView_Mtype.Rows)
+                    var currentTabName = this.tabControl.SelectedTab.Name;
+                    if(currentTabName.Equals(this.tab_Mtype.Name))
                     {
-                        var id = (int)row.Cells["MarkerAddId"].Value;
-                        if(id==int.Parse(values[0]))
+                        foreach (DataGridViewRow row in this.dataGridView_Mtype.Rows)
                         {
-                            row.Cells["MarkerAddNewValue"].Value = values[2];
+                            var id = (int)row.Cells["MarkerAddId"].Value;
+                            if (id == int.Parse(values[0]))
+                            {
+                                row.Cells["MarkerAddNewValue"].Value = values[2];
+                            }
                         }
                     }
-                   
+                    if (currentTabName.Equals(this.tabPage_Mtype19.Name))
+                    {
+                        foreach (DataGridViewRow row in this.dataGridView_MType19.Rows)
+                        {
+                            var id = (int)row.Cells["MType19Id"].Value;
+                            if (id == int.Parse(values[0]))
+                            {
+                                row.Cells["MType19NewValue"].Value = values[2];
+                            }
+                        }
+                    }
+
                 }
             }
             catch
@@ -247,7 +274,7 @@ namespace SearchRepleace
                 if (sender != null && sender.GetType() == typeof(DataGridView))
                 {
                     var currentTabName = this.tabControl.SelectedTab.Name;
-                    if (currentTabName.Equals(this.tab_Mtype.Name))
+                    if (currentTabName.Equals(this.tab_Mtype.Name)|| currentTabName.Equals(this.tabPage_Mtype19.Name))
                     {
                         DataGirdViewCellPaste((DataGridView)sender);
                     }

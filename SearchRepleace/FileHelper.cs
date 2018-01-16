@@ -29,7 +29,7 @@ namespace SearchRepleace
             if (!oldStr.Contains(oldStr)) return false;
             contents = contents.Replace(oldStr, newStr);
             File.WriteAllText(fileName, contents, Encoding.UTF8);
-            LogAction(oldStr, newStr);
+            //LogAction(oldStr, newStr);
             return true;
         }
 
